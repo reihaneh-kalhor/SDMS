@@ -1,5 +1,9 @@
 package Algorithms;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import Algorithms.PlaneSweepHelpers.*;
 
 //procedure PLANE_SWEEP(setA, setB);
 //begin
@@ -23,6 +27,48 @@ package Algorithms;
 //    end loop;
 //end;
 
-
 public class PlaneSweep {
+
+    private ArrayList<Rectangle> sortByLeftSide(ArrayList<Rectangle> set) {
+        Collections.sort(set, new Comparator<Rectangle>() {
+            @Override
+            public int compare(Rectangle o1, Rectangle o2) {
+                float rect1Left = o1.left;
+                float rect2Left = o2.left;
+                if (rect1Left < rect2Left) return -1;
+                if (rect1Left > rect2Left) return 1;
+                return 0;
+            }
+        });
+        return set;
+    }
+
+    public void planeSweep(ArrayList<Rectangle> setA, ArrayList<Rectangle> setB) {
+        ArrayList<Rectangle> listA = sortByLeftSide(setA);
+        ArrayList<Rectangle> listB = sortByLeftSide(setB);
+        SweepStructure sweepStructureA = new SweepStructure();
+        SweepStructure sweepStructureB = new SweepStructure();
+
+        int indexA = 0;
+        int indexB = 0;
+        int sizeA = listA.size();
+        int sizeB = listB.size();
+
+        while (indexA < sizeA || indexB < sizeB) {
+            Rectangle listAFirst = listA.get(indexA);
+            Rectangle listBFirst = listB.get(indexB);
+            /* get left most rectangle from the two lists */
+            if (listAFirst.left < listBFirst.left) {
+                sweepStructureA.insert(listAFirst);
+                sweepStructureB.removeInactive(listAFirst);
+                sweepStructureB.search(listAFirst); //TODO: Do something with the result
+                indexA++;
+            } else {
+                sweepStructureB.insert(listBFirst);
+                sweepStructureA.removeInactive(listBFirst);
+                sweepStructureA.search(listBFirst); //TODO: Do something with the result
+                indexB++;
+            }
+        }
+    }
 }
