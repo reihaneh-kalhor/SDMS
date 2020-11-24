@@ -7,8 +7,8 @@ public class TestAlgorithm {
     public static void main(String[] args) {
 
         ClientDB db = new ClientDB();
-        db.fillAirportTable();    // fill sqlite db with airport data (!!! ONLY EXECUTE ONCE, otherwise data is duplicated)
-        db.fillFlightTable();    // fill sqlite db with flight data (!!! ONLY EXECUTE ONCE, otherwise data is duplicated)
+//        db.fillAirportTable();    // fill sqlite db with airport data (!!! ONLY EXECUTE ONCE, otherwise data is duplicated)
+//        db.fillFlightTable();    // fill sqlite db with flight data (!!! ONLY EXECUTE ONCE, otherwise data is duplicated)
 
         System.out.println("Reading dataset1");
         ArrayList<Airport> set1 = new ArrayList<Airport>();
