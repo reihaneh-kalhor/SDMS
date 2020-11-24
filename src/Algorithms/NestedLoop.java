@@ -12,6 +12,6 @@ package Algorithms;
 //end;
 
 
-public class NestedLoop {
 
+public class NestedLoop {
 }
