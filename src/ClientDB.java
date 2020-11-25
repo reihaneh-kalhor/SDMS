@@ -1,9 +1,34 @@
+import org.geotools.data.DataStore;
+import org.geotools.data.DataStoreFinder;
+import org.geotools.data.FeatureSource;
+import org.geotools.data.shapefile.ShapefileDumper;
+import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.geometry.GeometryBuilder;
+import org.geotools.geometry.GeometryFactoryFinder;
+import org.geotools.geometry.iso.text.WKTParser;
+import org.geotools.referencing.crs.*;
+import org.geotools.util.factory.Hints;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.filter.Filter;
+import org.opengis.geometry.PositionFactory;
+import org.opengis.geometry.aggregate.AggregateFactory;
+import org.opengis.geometry.coordinate.GeometryFactory;
+import org.opengis.geometry.primitive.Point;
+import org.opengis.geometry.primitive.PrimitiveFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.nio.charset.Charset;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ClientDB {
 
@@ -51,7 +76,7 @@ public class ClientDB {
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.exit(1);
-        }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
@@ -102,6 +127,55 @@ public class ClientDB {
             e.printStackTrace();
             System.exit(1);
         }
+
+    }
+
+    public void readItalyDB() {
+        Connection conn = null;
+//        Hints hints = new Hints(Hints.CRS, DefaultGeographicCRS.WGS84);
+//        PositionFactory positionFactory = GeometryFactoryFinder.getPositionFactory(hints);
+//        GeometryFactory geometryFactory = GeometryFactoryFinder.getGeometryFactory(hints);
+//        PrimitiveFactory primitiveFactory = GeometryFactoryFinder.getPrimitiveFactory(hints);
+//        AggregateFactory aggregateFactory = GeometryFactoryFinder.getAggregateFactory(hints);
+//
+//        WKTParser parser = new WKTParser( geometryFactory, primitiveFactory, positionFactory, aggregateFactory );
+        ArrayList<ArrayList<String>> comm_set = new ArrayList<>();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+
+            // read communities
+            java.sql.Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from communities;");
+            while(rs.next()) {
+                String comm_id = rs.getString("community_id");
+                String comm_name = rs.getString("community_name");
+                String population = rs.getString("population");
+                String province_id = rs.getString("province_id");
+                String geo_wkt = rs.getString("geo_wkt");
+
+//                System.out.println("comm id: " + comm_id + " comm_name: " + comm_name + " population: " + population + " province_id: " + province_id + " geom: " + geo_wkt);
+
+                ArrayList<String> row = new ArrayList<>();
+                row.add(comm_id);
+                row.add(comm_name);
+                row.add(population);
+                row.add(province_id);
+                row.add(geo_wkt);
+                comm_set.add(row);
+            }
+            System.out.println(comm_set.size());
+
+            // read railways
+            java.sql.Statement stmt2 = conn.createStatement();
+            ResultSet rs2 = stmt.executeQuery("select * from railways;");
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
 
     }
 }
