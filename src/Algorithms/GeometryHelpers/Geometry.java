@@ -1,3 +1,5 @@
+package Algorithms.GeometryHelpers;
+
 import org.geotools.geometry.iso.io.wkt.ParseException;
 import org.geotools.geometry.iso.io.wkt.WKTReader;
 import org.geotools.geometry.jts.WKTReader2;

@@ -1,3 +1,4 @@
+import Algorithms.NestedLoop;
 import Italy.Community;
 import Italy.Province;
 import Italy.Railway;
@@ -45,16 +46,11 @@ public class TestAlgorithm {
         ArrayList<Region> regions = db.readRegions();
         ArrayList<Railway> railways = db.readRailways();
 
-        Geometry geo = new Geometry();
-        String railway = railways.get(0).getGeo_wkt();
-        for (int i = 0; i < communities.size(); i++) {
-            if (i % 100 == 0) { System.out.println("i: " + i); }
-            String comm = communities.get(i).getGeo_wkt();
-            Boolean b = geo.compareShapes(railway, comm);
-            if (b) {
-                System.out.println(railways.get(0).getName() + " and " + communities.get(i).getComm_name() + " intersect!");
-            }
-        }
+
+        NestedLoop nl = new NestedLoop();
+        nl.join(communities, railways);
+//        nl.join(communities);
+
 
 
     }
