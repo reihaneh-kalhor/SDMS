@@ -1,6 +1,9 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import Italy.Community;
+import Italy.Province;
+import Italy.Railway;
+import Italy.Region;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.ArrayList;
 
 public class TestAlgorithm {
@@ -38,6 +41,22 @@ public class TestAlgorithm {
 //            System.out.println(ex.toString());
 //        }
 
-        db.readItalyDB();
+        ArrayList<Community> communities = db.readCommunities();
+        ArrayList<Province> provinces = db.readProvinces();
+        ArrayList<Region> regions = db.readRegions();
+        ArrayList<Railway> railways = db.readRailways();
+
+        Geometry geo = new Geometry();
+        String railway = railways.get(0).getGeo_wkt();
+        for (int i = 0; i < communities.size(); i++) {
+            if (i % 100 == 0) { System.out.println("i: " + i); }
+            String comm = communities.get(i).getGeo_wkt();
+            Boolean b = geo.compareShapes(railway, comm);
+            if (b) {
+                System.out.println(railways.get(0).getName() + " and " + communities.get(i).getComm_name() + " intersect!");
+            }
+        }
+
+
     }
 }
