@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 
 public class Airport {
 
@@ -36,9 +36,9 @@ public class Airport {
     Airport(String details) {
         String[] s = details.split(",");
         id = Integer.parseInt(s[0]);
-        name = s[1].replaceAll("\"", "");
-        city = s[2].replaceAll("\"", "");
-        country = s[3].replaceAll("\"", "");
+        name = s[1].replaceAll("\"", "").replaceAll("'", "");
+        city = s[2].replaceAll("\"", "").replaceAll("'", "");
+        country = s[3].replaceAll("\"", "").replaceAll("'", "");
         iata = s[4].replaceAll("\"", "");
         icao = s[5].replaceAll("\"", "");
         latitude = Float.parseFloat(s[6]);
