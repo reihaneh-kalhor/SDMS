@@ -1,6 +1,5 @@
 package Algorithms.PlaneSweepHelpers;
 
-//TODO: Implement this class
 public class Rectangle {
     //Store sides of Rectangle
     public float left, right, bottom, top;
