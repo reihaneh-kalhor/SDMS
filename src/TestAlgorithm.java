@@ -2,7 +2,6 @@ import Italy.Community;
 import Italy.Province;
 import Italy.Railway;
 import Italy.Region;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 
