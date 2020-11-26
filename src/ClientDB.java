@@ -1,114 +1,16 @@
-import Italy.Community;
-import Italy.Province;
-import Italy.Railway;
-import Italy.Region;
+import Italy.*;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class ClientDB {
 
-//    public void fillAirportTable() {
-//
-//        String line = "";
-//        Connection conn = null;
-//
-//        try {
-//            Class.forName("org.sqlite.JDBC");
-//            conn = DriverManager.getConnection("jdbc:sqlite:airports.sqlite");
-//            java.sql.Statement stmt = conn.createStatement();
-//
-//            try {
-//                FileReader fileReader = new FileReader(new File("airports.dat").getAbsolutePath());
-//                BufferedReader reader = new BufferedReader(fileReader);
-//
-//                while ((line = reader.readLine()) != null) {
-//                    Airport a = new Airport(line);
-//                    int id = a.id;
-//                    String name = a.name;
-//                    String city = a.city;
-//                    String country = a.country;
-//                    String iata = a.iata;
-//                    String icao = a.icao;
-//                    float latitude = a.latitude;
-//                    float longitude = a.longitude;
-//                    float altitude = a.altitude;
-//                    float timezone = a.timezone;
-//                    String dst = a.dst;
-//                    String tz = a.tz;
-//                    String type = a.type;
-//                    String source = a.source;
-//
-//                    System.out.println("inserting airport " + id);
-//                    String sql = "INSERT INTO Airport (AIRPORT_ID,NAME,CITY,COUNTRY,IATA,ICAO,LAT,LONG,ALT,TIMEZONE,DST,TZ,TYPE,SOURCE) "
-//                            + "values ('" + id + "','" + name + "','" + country + "','" +  city + "','" + iata + "','" + icao + "','" + latitude + "','" + longitude + "','"
-//                            + altitude + "','" + timezone + "','" + dst + "','" + tz + "','" + type + "','" + source +"')";
-//
-//                    stmt.executeUpdate(sql);
-//
-//                }
-//                reader.close();
-//
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                System.exit(1);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.exit(1);
-//        }
-//
-//    }
-//
-//    public void fillFlightTable() {
-//
-//        String line = "";
-//        Connection conn = null;
-//
-//        try {
-//            Class.forName("org.sqlite.JDBC");
-//            conn = DriverManager.getConnection("jdbc:sqlite:airports.sqlite");
-//            java.sql.Statement stmt = conn.createStatement();
-//
-//            try {
-//                FileReader fileReader = new FileReader(new File("routes.dat").getAbsolutePath());
-//                BufferedReader reader = new BufferedReader(fileReader);
-//
-//                while ((line = reader.readLine()) != null) {
-//                    Flight f = new Flight(line);
-//                    String airline = f.airline;
-//                    String id = f.id;
-//                    String source = f.source;
-//                    String sourceId = f.sourceId;
-//                    String destination = f.destination;
-//                    String destinationId = f.destinationId;
-//                    String codeshare = f.codeshare;
-//                    int stops = f.stops;
-//                    String equipment = f.equipment;
-//
-//                    System.out.println("inserting flight " + id);
-//                    String sql = "INSERT INTO Flight (AIRLINE,AIRLINE_ID,SOURCE,SOURCE_ID,DESTINATION,DESTINATION_ID,CODESHARE,STOPS,EQUIPMENT) "
-//                            + "values ('" + airline + "','" + id + "','" + source + "','" + sourceId + "','" + destination + "','" + destinationId + "','" + codeshare + "','" + stops + "','" + equipment + "')";
-//
-//                    stmt.executeUpdate(sql);
-//
-//                }
-//                reader.close();
-//
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                System.exit(1);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.exit(1);
-//        }
-//
-//    }
 
-    public ArrayList<Community> readCommunities() {
-        Connection conn = null;
-        ArrayList<Community> comm_set = new ArrayList<>();
+    public ArrayList<ItalyLocation> readCommunities() {
+        Connection conn;
+        ArrayList<ItalyLocation> comm_set = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -134,9 +36,9 @@ public class ClientDB {
         }
         return comm_set;
     }
-    public ArrayList<Province> readProvinces() {
-        Connection conn = null;
-        ArrayList<Province> prov_set = new ArrayList<>();
+    public ArrayList<ItalyLocation> readProvinces() {
+        Connection conn;
+        ArrayList<ItalyLocation> prov_set = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -161,9 +63,9 @@ public class ClientDB {
         }
         return prov_set;
     }
-    public ArrayList<Region> readRegions() {
-        Connection conn = null;
-        ArrayList<Region> reg_set = new ArrayList<>();
+    public ArrayList<ItalyLocation> readRegions() {
+        Connection conn;
+        ArrayList<ItalyLocation> reg_set = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -186,9 +88,9 @@ public class ClientDB {
         }
         return reg_set;
     }
-    public ArrayList<Railway> readRailways() {
-        Connection conn = null;
-        ArrayList<Railway> rail_set = new ArrayList<>();
+    public ArrayList<ItalyLocation> readRailways() {
+        Connection conn;
+        ArrayList<ItalyLocation> rail_set = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");

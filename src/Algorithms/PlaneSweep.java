@@ -1,9 +1,11 @@
 package Algorithms;
 
+import Algorithms.PlaneSweepHelpers.Rectangle;
+import Algorithms.PlaneSweepHelpers.SweepStructure;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import Algorithms.PlaneSweepHelpers.*;
 
 //procedure PLANE_SWEEP(setA, setB);
 //begin

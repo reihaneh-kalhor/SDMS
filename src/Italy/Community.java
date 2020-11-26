@@ -1,11 +1,15 @@
 package Italy;
 
-public class Community {
-    String comm_id;
-    String comm_name;
-    String population;
-    String province_id;
-    String geo_wkt;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Community extends ItalyLocation {
+    private String comm_id;
+    private String comm_name;
+    private String population;
+    private String province_id;
+    private String geo_wkt;
+    private ArrayList<String> columns = new ArrayList<>(Arrays.asList("comm_id", "comm_name", "population", "province_id", "geo_wkt"));
 
     public Community(String id, String name, String pop, String prov_id, String geo) {
         comm_id = id;
@@ -28,6 +32,10 @@ public class Community {
     }
     public String getGeo_wkt() {
         return geo_wkt;
+    }
+    public ArrayList<String> getColumns() {return columns; }
+    public ArrayList<String> getValuesAsList() {
+        return new ArrayList<>(Arrays.asList(comm_id, comm_name, population, province_id, geo_wkt));
     }
 
     public void print() {

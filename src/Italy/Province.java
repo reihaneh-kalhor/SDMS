@@ -1,10 +1,14 @@
 package Italy;
 
-public class Province {
-    String province_id;
-    String province_name;
-    String car_plate_code;
-    String region_id;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Province extends ItalyLocation {
+    private String province_id;
+    private String province_name;
+    private String car_plate_code;
+    private String region_id;
+    private ArrayList<String> columns = new ArrayList<>(Arrays.asList("province_id", "province_name", "car_plate_code", "region_id"));
 
     public Province(String id, String name, String car, String reg_id){
         province_id = id;
@@ -23,6 +27,10 @@ public class Province {
     }
     public String getRegion_id() {
         return region_id;
+    }
+    public ArrayList<String> getColumns() {return columns; }
+    public ArrayList<String> getValuesAsList() {
+        return new ArrayList<>(Arrays.asList(province_id, province_name, car_plate_code, region_id));
     }
 
     public void print() {
