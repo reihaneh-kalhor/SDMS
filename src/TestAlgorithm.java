@@ -2,32 +2,37 @@ import Algorithms.NestedLoop;
 import Italy.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TestAlgorithm {
     public static void main(String[] args) {
 
         ClientDB db = new ClientDB();
 
-
+        System.out.println("Reading communities...");
         ArrayList<ItalyLocation> communities = db.readCommunities();
-        System.out.println("Read communities");
+        System.out.println("Reading provinces...");
         ArrayList<ItalyLocation> provinces = db.readProvinces();
-        System.out.println("Read provinces");
+        System.out.println("Reading regions...");
         ArrayList<ItalyLocation> regions = db.readRegions();
-        System.out.println("Read regions");
+        System.out.println("Reading railways...");
         ArrayList<ItalyLocation> railways = db.readRailways();
-        System.out.println("Read railways");
+        System.out.println("Reading populated_places...");
+        ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();    // TODO create and populate "geo_wkt" column
         System.out.println(" ~ done \n");
 
 
         // Nested loop example queries
         NestedLoop nl = new NestedLoop();
-//        nl.join(communities, railways);
-//        nl.join(communities);
-        ArrayList<ArrayList<String>> res = nl.join(provinces, regions, "region_id");
-//        ArrayList<ArrayList<String>> res2 = nl.join(communities, provinces, "province_id");
+
+        long startTime = System.nanoTime();
+//        ArrayList<ArrayList<String>> res = nl.join(communities, provinces, "province_id");      // res size: 8092   time: 271ms
+        ArrayList<ArrayList<String>> res = nl.join(communities, populatedPlaces, "community_name", "name");      // res size: 7713   time: 6352ms
+//        ArrayList<ArrayList<String>> res = nl.join(communities, railways, "geo_wkt");      // res size: 81   time: 22684ms
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
         System.out.println("res size: " + res.size());
+        System.out.println("time: " + duration + "ms");
 
 
     }

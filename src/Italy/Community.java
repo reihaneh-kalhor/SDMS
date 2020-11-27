@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Community extends ItalyLocation {
-    private String comm_id;
-    private String comm_name;
+    private String community_id;
+    private String community_name;
     private String population;
     private String province_id;
     private String geo_wkt;
-    private ArrayList<String> columns = new ArrayList<>(Arrays.asList("comm_id", "comm_name", "population", "province_id", "geo_wkt"));
+    private ArrayList<String> columns = new ArrayList<>(Arrays.asList("community_id", "community_name", "population", "province_id", "geo_wkt"));
 
     public Community(String id, String name, String pop, String prov_id, String geo) {
-        comm_id = id;
-        comm_name = name;
+        community_id = id;
+        community_name = name;
         population = pop;
         province_id = prov_id;
         geo_wkt = geo;
     }
     public String getComm_id() {
-        return comm_id;
+        return community_id;
     }
     public String getComm_name() {
-        return comm_name;
+        return community_name;
     }
     public String getPopulation() {
         return population;
@@ -35,10 +35,10 @@ public class Community extends ItalyLocation {
     }
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
-        return new ArrayList<>(Arrays.asList(comm_id, comm_name, population, province_id, geo_wkt));
+        return new ArrayList<>(Arrays.asList(community_id, community_name, population, province_id, geo_wkt));
     }
 
     public void print() {
-        System.out.println("id: " + comm_id + " name: " + comm_name + " population: " + population + " prov_id: " + province_id);
+        System.out.println("id: " + community_id + " name: " + community_name + " population: " + population + " prov_id: " + province_id);
     }
 }

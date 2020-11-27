@@ -104,8 +104,8 @@ public class ClientDB {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
                 String geo_wkt = rs.getString("geo_wkt");
-                Railway reg = new Railway(pk_uid, id, name, geo_wkt);
-                rail_set.add(reg);
+                Railway rail = new Railway(pk_uid, id, name, geo_wkt);
+                rail_set.add(rail);
             }
             rs.close();
             conn.close();
@@ -114,5 +114,33 @@ public class ClientDB {
             System.exit(1);
         }
         return rail_set;
+    }
+
+    public ArrayList<ItalyLocation> readPopulatedPlaces() {
+        Connection conn;
+        ArrayList<ItalyLocation> pop_set = new ArrayList<>();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+
+            // read communities
+            java.sql.Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from populated_places;");
+            while(rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String latitude = rs.getString("latitude");
+                String longitude = rs.getString("longitude");
+                PopulatedPlace pop = new PopulatedPlace(id, name, latitude, longitude);
+                pop_set.add(pop);
+            }
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return pop_set;
     }
 }
