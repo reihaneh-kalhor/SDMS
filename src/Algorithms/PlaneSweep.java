@@ -56,19 +56,21 @@ public class PlaneSweep {
         int sizeA = listA.size();
         int sizeB = listB.size();
 
-        while (indexA < sizeA || indexB < sizeB) {
+        while (indexA < sizeA && indexB < sizeB) {
             Rectangle listAFirst = listA.get(indexA);
             Rectangle listBFirst = listB.get(indexB);
             /* get left most rectangle from the two lists */
             if (listAFirst.left < listBFirst.left) {
                 sweepStructureA.insert(listAFirst);
                 sweepStructureB.removeInactive(listAFirst);
-                sweepStructureB.search(listAFirst); //TODO: Do something with the result
+                ArrayList<Rectangle> intersecting = sweepStructureB.search(listAFirst);
+                //TODO: Do something meaningful with the result
                 indexA++;
             } else {
                 sweepStructureB.insert(listBFirst);
                 sweepStructureA.removeInactive(listBFirst);
-                sweepStructureA.search(listBFirst); //TODO: Do something with the result
+                ArrayList<Rectangle> intersecting = sweepStructureA.search(listBFirst);
+                //TODO: Do something meaningful with the result
                 indexB++;
             }
         }
