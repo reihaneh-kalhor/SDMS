@@ -15,10 +15,11 @@ public class SweepStructure {
         //Initial list is empty
         ArrayList<Rectangle> newActiveRectangles = new ArrayList<>();
         //Loop over all Rectangles in activeRectangles list
+        //removes from the active set all rectangles that do NOT overlap a given rectangle
         for(int i = 0; i< activeRectangles.size(); i++){
             Rectangle rect2 = activeRectangles.get(i);
             //If rectangle does not intersect with given Rectangle: add it to new list
-            if(!rect2.intersects(rect)){
+            if(rect2.intersects(rect)){
                 newActiveRectangles.add(rect2);
             }
         }
