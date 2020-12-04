@@ -1,7 +1,8 @@
 package Algorithms;
 
-import Algorithms.PlaneSweepHelpers.Rectangle;
+import Algorithms.PlaneSweepHelpers.PlaneSweepItalyLocation;
 import Algorithms.PlaneSweepHelpers.SweepStructure;
+import Italy.ItalyLocation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import java.util.Comparator;
 //    sweepStructureA←CREATE_SWEEP_STRUCTURE();
 //    sweepStructureB←CREATE_SWEEP_STRUCTURE();
 //    while NOT listA.END() OR NOT listB.END() do
-//        /* get left most rectangle from the two lists */
+//        /* get left most Italylocation from the two lists */
 //        if listA.FIRST() < listB.FIRST() then
 //            sweepStructureA.INSERT(listA.FIRST());
 //            sweepStructureB.REMOVE_INACTIVE(listA.FIRST());
@@ -31,25 +32,35 @@ import java.util.Comparator;
 
 public class PlaneSweep {
 
-    private ArrayList<Rectangle> sortByLeftSide(ArrayList<Rectangle> set) {
-        Collections.sort(set, new Comparator<Rectangle>() {
+    public ArrayList<PlaneSweepItalyLocation> intializeLocations(ArrayList<ItalyLocation> italyLocations){
+        ArrayList<PlaneSweepItalyLocation> psLocations = new ArrayList<>();
+        for(int i=0;i<italyLocations.size();i++){
+            psLocations.add(new PlaneSweepItalyLocation(italyLocations.get(i)));
+        }
+        return psLocations;
+    }
+
+    private ArrayList<PlaneSweepItalyLocation> sortByLeftSide(ArrayList<PlaneSweepItalyLocation> set) {
+        Collections.sort(set, new Comparator<PlaneSweepItalyLocation>() {
             @Override
-            public int compare(Rectangle o1, Rectangle o2) {
-                float rect1Left = o1.left;
-                float rect2Left = o2.left;
-                if (rect1Left < rect2Left) return -1;
-                if (rect1Left > rect2Left) return 1;
+            public int compare(PlaneSweepItalyLocation o1, PlaneSweepItalyLocation o2) {
+                double italy1Left = o1.left;
+                double italy2Left = o2.left;
+                if (italy1Left < italy2Left) return -1;
+                if (italy1Left > italy2Left) return 1;
                 return 0;
             }
         });
         return set;
     }
 
-    public void planeSweep(ArrayList<Rectangle> setA, ArrayList<Rectangle> setB) {
-        ArrayList<Rectangle> listA = sortByLeftSide(setA);
-        ArrayList<Rectangle> listB = sortByLeftSide(setB);
+    public void planeSweep(ArrayList<PlaneSweepItalyLocation> setA, ArrayList<PlaneSweepItalyLocation> setB) {
+        ArrayList<PlaneSweepItalyLocation> listA = sortByLeftSide(setA);
+        ArrayList<PlaneSweepItalyLocation> listB = sortByLeftSide(setB);
         SweepStructure sweepStructureA = new SweepStructure();
         SweepStructure sweepStructureB = new SweepStructure();
+
+        int intersectingCount = 0;
 
         int indexA = 0;
         int indexB = 0;
@@ -57,22 +68,27 @@ public class PlaneSweep {
         int sizeB = listB.size();
 
         while (indexA < sizeA && indexB < sizeB) {
-            Rectangle listAFirst = listA.get(indexA);
-            Rectangle listBFirst = listB.get(indexB);
-            /* get left most rectangle from the two lists */
+            PlaneSweepItalyLocation listAFirst = listA.get(indexA);
+            PlaneSweepItalyLocation listBFirst = listB.get(indexB);
+            /* get left most ItalyLocation from the two lists */
             if (listAFirst.left < listBFirst.left) {
                 sweepStructureA.insert(listAFirst);
                 sweepStructureB.removeInactive(listAFirst);
-                ArrayList<Rectangle> intersecting = sweepStructureB.search(listAFirst);
+                ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureB.search(listAFirst);
+                //System.out.println("Intersecting: " + intersecting);
+                intersectingCount += intersecting.size();
                 //TODO: Do something meaningful with the result
                 indexA++;
             } else {
                 sweepStructureB.insert(listBFirst);
                 sweepStructureA.removeInactive(listBFirst);
-                ArrayList<Rectangle> intersecting = sweepStructureA.search(listBFirst);
+                ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureA.search(listBFirst);
+                //System.out.println("Intersecting: " + intersecting);
+                intersectingCount += intersecting.size();
                 //TODO: Do something meaningful with the result
                 indexB++;
             }
         }
+        System.out.println("PlaneSweep detected " + intersectingCount + " intersections");
     }
 }
