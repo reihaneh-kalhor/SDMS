@@ -1,5 +1,7 @@
 import Italy.*;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.geotools.geometry.jts.WKTReader2;
+import org.geotools.renderer.crs.GeographicHandlerFactory;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.sqlite.SQLiteConfig;
@@ -35,14 +37,12 @@ public class ClientDB {
                     String province_id = rs.getString("province_id");
                     String geo_wkt = rs.getString("geo_wkt");
                     Geometry geom = reader.read(geo_wkt);
-
                     Community comm = new Community(comm_id, comm_name, population, province_id, geo_wkt, geom);
                     comm_set.add(comm);
                 } catch (ParseException e) {
                     e.printStackTrace();
                     System.exit(1);
                 }
-
             }
             rs.close();
             conn.close();
@@ -147,7 +147,6 @@ public class ClientDB {
         }
         return rail_set;
     }
-
     public ArrayList<ItalyLocation> readPopulatedPlaces() {
         Connection conn;
         ArrayList<ItalyLocation> pop_set = new ArrayList<>();
