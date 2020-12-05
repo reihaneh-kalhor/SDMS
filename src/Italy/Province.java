@@ -18,7 +18,8 @@ public class Province extends ItalyLocation {
         car_plate_code = car;
         region_id = reg_id;
     }
-    public String getProvince_id() {
+    @Override
+    public String getId() {
         return province_id;
     }
     public String getProvince_name() {
@@ -39,6 +40,18 @@ public class Province extends ItalyLocation {
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(province_id, province_name, car_plate_code, region_id));
+    }
+
+    @Override
+    public String getLatitude() {
+        System.out.println("Region has no Latitude column");
+        return null;
+    }
+
+    @Override
+    public String getLongitude() {
+        System.out.println("Region has no Longitude column");
+        return null;
     }
 
     public void print() {

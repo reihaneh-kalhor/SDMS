@@ -14,7 +14,8 @@ public class Region extends ItalyLocation {
         region_id = id;
         region_name = name;
     }
-    public String getRegion_id() {
+    @Override
+    public String getId() {
         return region_id;
     }
     public String getRegion_name() {
@@ -30,6 +31,18 @@ public class Region extends ItalyLocation {
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(region_id, region_name));
+    }
+
+    @Override
+    public String getLatitude() {
+        System.out.println("Region has no Latitude column");
+        return null;
+    }
+
+    @Override
+    public String getLongitude() {
+        System.out.println("Region has no Longitude column");
+        return null;
     }
 
     public void print() {

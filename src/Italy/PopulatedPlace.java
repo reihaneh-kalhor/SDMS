@@ -18,7 +18,7 @@ public class PopulatedPlace extends ItalyLocation {
         latitude = la;
         longitude = lo;
     }
-
+    @Override
     public String getId() {
         return id;
     }

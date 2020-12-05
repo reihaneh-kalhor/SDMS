@@ -22,7 +22,8 @@ public class Community extends ItalyLocation {
         geo_wkt = geo;
         geometry = geom;
     }
-    public String getComm_id() {
+    @Override
+    public String getId() {
         return community_id;
     }
     public String getComm_name() {
@@ -45,6 +46,18 @@ public class Community extends ItalyLocation {
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(community_id, community_name, population, province_id, geo_wkt));
+    }
+
+    @Override
+    public String getLatitude() {
+        System.out.println("Region has no Latitude column");
+        return null;
+    }
+
+    @Override
+    public String getLongitude() {
+        System.out.println("Region has no Longitude column");
+        return null;
     }
 
     public void print() {

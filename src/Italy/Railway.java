@@ -24,6 +24,7 @@ public class Railway extends ItalyLocation {
     public String getPk_uid() {
         return pk_uid;
     }
+    @Override
     public String getId() {
         return id;
     }
@@ -39,6 +40,18 @@ public class Railway extends ItalyLocation {
     public Geometry getGeometry() { return geometry; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(pk_uid, id, name, geo_wkt));
+    }
+
+    @Override
+    public String getLatitude() {
+        System.out.println("Region has no Latitude column");
+        return null;
+    }
+
+    @Override
+    public String getLongitude() {
+        System.out.println("Region has no Longitude column");
+        return null;
     }
 
 
