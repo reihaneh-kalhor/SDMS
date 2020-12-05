@@ -1,10 +1,14 @@
-# General
+#Data files
 .DS_Store
-italy.sqlite
+*.sqlite
+*.dat
 
 #File types
 *.iml
 
 #Directories
 .idea/
+out/
+jsi-1.0.0/
+geotools-24.1/
 out/
