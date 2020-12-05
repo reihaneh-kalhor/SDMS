@@ -1,5 +1,7 @@
 package Italy;
 
+import org.locationtech.jts.geom.Geometry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,6 +20,13 @@ public class Region extends ItalyLocation {
     public String getRegion_name() {
         return region_name;
     }
+
+    @Override
+    public Geometry getGeometry() {
+        System.out.println("Region has no geometry column");
+        return null;
+    }
+
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(region_id, region_name));

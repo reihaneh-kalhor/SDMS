@@ -1,5 +1,7 @@
 package Italy;
 
+import org.locationtech.jts.geom.Geometry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,13 +10,15 @@ public class Railway extends ItalyLocation {
     private String id;
     private String name;
     private String geo_wkt;
+    private Geometry geometry;
     private ArrayList<String> columns = new ArrayList<>(Arrays.asList("pk_uid", "id", "name", "geo_wkt"));
 
-    public Railway(String uid, String i, String n, String geo) {
+    public Railway(String uid, String i, String n, String geo, Geometry geom) {
         pk_uid = uid;
         id = i;
         name = n;
         geo_wkt= geo;
+        geometry = geom;
     }
 
     public String getPk_uid() {
@@ -32,6 +36,7 @@ public class Railway extends ItalyLocation {
     public ArrayList<String> getColumns() {
         return columns;
     }
+    public Geometry getGeometry() { return geometry; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(pk_uid, id, name, geo_wkt));
     }

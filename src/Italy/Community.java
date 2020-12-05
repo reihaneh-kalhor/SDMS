@@ -1,5 +1,7 @@
 package Italy;
 
+import org.locationtech.jts.geom.Geometry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,14 +11,16 @@ public class Community extends ItalyLocation {
     private String population;
     private String province_id;
     private String geo_wkt;
+    private Geometry geometry;
     private ArrayList<String> columns = new ArrayList<>(Arrays.asList("community_id", "community_name", "population", "province_id", "geo_wkt"));
 
-    public Community(String id, String name, String pop, String prov_id, String geo) {
+    public Community(String id, String name, String pop, String prov_id, String geo, Geometry geom) {
         community_id = id;
         community_name = name;
         population = pop;
         province_id = prov_id;
         geo_wkt = geo;
+        geometry = geom;
     }
     public String getComm_id() {
         return community_id;
@@ -33,6 +37,11 @@ public class Community extends ItalyLocation {
     public String getGeo_wkt() {
         return geo_wkt;
     }
+    @Override
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(community_id, community_name, population, province_id, geo_wkt));

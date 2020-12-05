@@ -1,19 +1,15 @@
 package Italy;
 
+import org.locationtech.jts.geom.Geometry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ItalyLocation {
+public abstract class ItalyLocation {
     private ArrayList<String> columns = new ArrayList<>(Arrays.asList(""));
 
-    public ArrayList<String> getColumns() {
-        return columns;
-    }
-    public ArrayList<String> getValuesAsList() {
-        return new ArrayList<>(Arrays.asList(""));
-    }
+    public abstract Geometry getGeometry();
+    public abstract ArrayList<String> getColumns();
+    public abstract ArrayList<String> getValuesAsList();
 
-    public void print() {
-        System.out.println("italy");
-    }
 }

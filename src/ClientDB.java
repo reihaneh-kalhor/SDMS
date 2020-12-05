@@ -1,4 +1,8 @@
 import Italy.*;
+import org.geotools.geometry.jts.WKTReader2;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.io.ParseException;
+import org.sqlite.SQLiteConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,20 +17,32 @@ public class ClientDB {
         ArrayList<ItalyLocation> comm_set = new ArrayList<>();
 
         try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
 
             // read communities
             java.sql.Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from communities;");
+
+            WKTReader2 reader = new WKTReader2();
             while(rs.next()) {
-                String comm_id = rs.getString("community_id");
-                String comm_name = rs.getString("community_name");
-                String population = rs.getString("population");
-                String province_id = rs.getString("province_id");
-                String geo_wkt = rs.getString("geo_wkt");
-                Community comm = new Community(comm_id, comm_name, population, province_id, geo_wkt);
-                comm_set.add(comm);
+                try{
+                    String comm_id = rs.getString("community_id");
+                    String comm_name = rs.getString("community_name");
+                    String population = rs.getString("population");
+                    String province_id = rs.getString("province_id");
+                    String geo_wkt = rs.getString("geo_wkt");
+                    Geometry geom = reader.read(geo_wkt);
+
+                    Community comm = new Community(comm_id, comm_name, population, province_id, geo_wkt, geom);
+                    comm_set.add(comm);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+
             }
             rs.close();
             conn.close();
@@ -41,8 +57,10 @@ public class ClientDB {
         ArrayList<ItalyLocation> prov_set = new ArrayList<>();
 
         try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
 
             // read communities
             java.sql.Statement stmt = conn.createStatement();
@@ -68,8 +86,10 @@ public class ClientDB {
         ArrayList<ItalyLocation> reg_set = new ArrayList<>();
 
         try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
 
             // read communities
             java.sql.Statement stmt = conn.createStatement();
@@ -93,19 +113,31 @@ public class ClientDB {
         ArrayList<ItalyLocation> rail_set = new ArrayList<>();
 
         try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
 
             // read communities
             java.sql.Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from railways;");
+            WKTReader2 reader = new WKTReader2();
+
             while(rs.next()) {
-                String pk_uid = rs.getString("pk_uid");
-                String id = rs.getString("id");
-                String name = rs.getString("name");
-                String geo_wkt = rs.getString("geo_wkt");
-                Railway rail = new Railway(pk_uid, id, name, geo_wkt);
-                rail_set.add(rail);
+                try {
+                    String pk_uid = rs.getString("pk_uid");
+                    String id = rs.getString("id");
+                    String name = rs.getString("name");
+                    String geo_wkt = rs.getString("geo_wkt");
+                    Geometry geom = reader.read(geo_wkt);
+
+                    Railway rail = new Railway(pk_uid, id, name, geo_wkt, geom);
+                    rail_set.add(rail);
+                    }
+                catch (ParseException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
             }
             rs.close();
             conn.close();
@@ -121,8 +153,10 @@ public class ClientDB {
         ArrayList<ItalyLocation> pop_set = new ArrayList<>();
 
         try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
 
             // read communities
             java.sql.Statement stmt = conn.createStatement();

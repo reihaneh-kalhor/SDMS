@@ -1,5 +1,7 @@
 package Italy;
 
+import org.locationtech.jts.geom.Geometry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -31,6 +33,12 @@ public class PopulatedPlace extends ItalyLocation {
 
     public String getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public Geometry getGeometry() {
+        System.out.println("Region has no geometry column");
+        return null;
     }
 
     public ArrayList<String> getColumns() {

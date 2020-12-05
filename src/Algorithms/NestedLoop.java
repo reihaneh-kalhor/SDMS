@@ -14,6 +14,9 @@ package Algorithms;
 
 import Algorithms.GeometryHelpers.GeometryComparison;
 import Italy.*;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.index.strtree.STRtree;
+
 import java.util.ArrayList;
 
 public class NestedLoop {
