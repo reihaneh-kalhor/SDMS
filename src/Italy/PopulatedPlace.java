@@ -37,7 +37,7 @@ public class PopulatedPlace extends ItalyLocation {
 
     @Override
     public Geometry getGeometry() {
-        System.out.println("Region has no geometry column");
+        System.out.println("PopulatedPlace has no geometry column");
         return null;
     }
 

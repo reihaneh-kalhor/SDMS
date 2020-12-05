@@ -13,8 +13,6 @@ package Algorithms;
 //end;
 
 
-import Algorithms.GeometryHelpers.GeometryComparison;
-import Italy.Community;
 import Italy.ItalyLocation;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.index.strtree.STRtree;
@@ -28,19 +26,21 @@ public class IndexedNestedLoop {
         ArrayList<List> result = new ArrayList<>();
         STRtree spatialIndex = new STRtree();
 
-            for (ItalyLocation n1 : table1) {
-                Geometry geometry1 = n1.getGeometry();
+        for (ItalyLocation n1 : table1) {
+            Geometry geometry1 = n1.getGeometry();
 
-                spatialIndex.insert(geometry1.getEnvelopeInternal(), geometry1);
-            }
+            spatialIndex.insert(geometry1.getEnvelopeInternal(), geometry1);
+        }
+        System.out.println("Spatial index complete");
 
-            for (ItalyLocation n2 : table2) {
-                Geometry geometry2 = n2.getGeometry();
+        for (ItalyLocation n2 : table2) {
+            Geometry geometry2 = n2.getGeometry();
 
-                List intersectingObjects = spatialIndex.query(geometry2.getEnvelopeInternal());
-                System.out.println("intersectingObjects size: " + intersectingObjects.size());
-                result.add(intersectingObjects);
-            }
+            List intersectingObjects = spatialIndex.query(geometry2.getEnvelopeInternal());
+            System.out.println("intersectingObjects size: " + intersectingObjects.size());
+            result.add(intersectingObjects);
+        }
+
         return result;
     }
 }

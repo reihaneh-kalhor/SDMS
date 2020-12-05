@@ -33,7 +33,7 @@ public class Province extends ItalyLocation {
 
     @Override
     public Geometry getGeometry() {
-        System.out.println("Region has no geometry column");
+        System.out.println("Province has no geometry column");
         return null;
     }
     public ArrayList<String> getColumns() {return columns; }

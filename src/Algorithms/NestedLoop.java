@@ -14,15 +14,13 @@ package Algorithms;
 
 import Algorithms.GeometryHelpers.GeometryComparison;
 import Italy.*;
-import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.index.strtree.STRtree;
 
 import java.util.ArrayList;
 
 public class NestedLoop {
     private GeometryComparison geo = new GeometryComparison();
 
-    // TODO find way to generalize join condition (now: =, intersect for geo)
+    // TODO find way to generalize join condition (now: 'equals' for strings and 'intersects' for geo)
     // generic join, give any two tables and one attribute, return joined result
     public ArrayList<ArrayList<String>> join(ArrayList<ItalyLocation> table1, ArrayList<ItalyLocation> table2, String attribute) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
@@ -38,11 +36,11 @@ public class NestedLoop {
                     ArrayList<String> values2 = n2.getValuesAsList();
                     String attVal2 = n2.getValuesAsList().get(attIdx2);
 
-                    if (attribute.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on attribute, compare shapes instead of strings
+                    if (attribute.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on geometry, compare shapes
                         values2.remove(attIdx2);
                         values1.addAll(values2);
                         result.add(values1); // merge values
-                    } else if (attVal1.equals(attVal2)) { // if value from table1 is same as value from table2, join
+                    } else if (attVal1.equals(attVal2)) { // else, compare strings
                         values2.remove(attIdx2);
                         values1.addAll(values2);
                         result.add(values1); // merge values
@@ -74,11 +72,11 @@ public class NestedLoop {
                         ArrayList<String> values2 = n2.getValuesAsList();
                         String attVal2 = n2.getValuesAsList().get(attIdx2);
 
-                        if (attribute1.equals("geo_wkt") && attribute2.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on attribute, compare shapes instead of strings
+                        if (attribute1.equals("geo_wkt") && attribute2.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on geometry, compare shapes
                             values2.remove(attIdx2);
                             values1.addAll(values2);
                             result.add(values1); // merge values
-                        } else if (attVal1.equals(attVal2)) { // if value from table1 is same as value from table2, join
+                        } else if (attVal1.equals(attVal2)) { // else, compare strings
                             values2.remove(attIdx2);
                             values1.addAll(values2);
                             result.add(values1); // merge values
