@@ -12,6 +12,7 @@ public class PlaneSweepItalyLocation {
     private GeometryReader reader = new GeometryReader();
     public ItalyLocation italyLocation;
     public double left;
+    public double right;
     public Geometry geometry;
 
     public boolean intersects(PlaneSweepItalyLocation otherObj){
@@ -24,6 +25,7 @@ public class PlaneSweepItalyLocation {
         int geoIndex = italyLocation.getColumns().indexOf("geo_wkt");
         String geoString = italyLocation.getValuesAsList().get(geoIndex);
         geometry = reader.read(geoString);
+        //TODO: This should be written more efficiently
         // Left: get x-value of leftmost coordinate
         Arrays.stream(geometry.getCoordinates()).min(new Comparator<Coordinate>() {
             @Override
@@ -33,6 +35,15 @@ public class PlaneSweepItalyLocation {
                 return 0;
             }
         }).ifPresent(value -> this.left = value.x );
+        // Right: get x-value of rightmost coordinate
+        Arrays.stream(geometry.getCoordinates()).max(new Comparator<Coordinate>() {
+            @Override
+            public int compare(Coordinate o1, Coordinate o2) {
+                if (o1.x < o2.x) return -1;
+                if (o1.x > o2.x) return 1;
+                return 0;
+            }
+        }).ifPresent(value -> this.right = value.x );
     }
 
 }

@@ -89,6 +89,21 @@ public class PlaneSweep {
                 indexB++;
             }
         }
+        while (indexA < sizeA) {
+            PlaneSweepItalyLocation listAFirst = listA.get(indexA);
+            sweepStructureB.removeInactive(listAFirst);
+            ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureB.search(listAFirst);
+            intersectingCount = intersectingCount + intersecting.size();
+            indexA++;
+        }
+        while (indexB < sizeB) {
+            PlaneSweepItalyLocation listBFirst = listB.get(indexB);
+            sweepStructureA.removeInactive(listBFirst);
+            ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureA.search(listBFirst);
+            intersectingCount = intersectingCount + intersecting.size();
+            indexB++;
+        }
+
         System.out.println("PlaneSweep detected " + intersectingCount + " intersections");
     }
 }

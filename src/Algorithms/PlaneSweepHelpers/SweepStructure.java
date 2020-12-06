@@ -18,8 +18,8 @@ public class SweepStructure {
         //removes from the active set all Objects that do NOT overlap a given Object
         for(int i = 0; i< activeObjects.size(); i++){
             PlaneSweepItalyLocation obj2 = activeObjects.get(i);
-            //If Object does not intersect with given Objects: add it to new list
-            if(obj2.intersects(obj1)){
+            //If Object is not behind sweep-line: add it to new list
+            if(obj2.right >= obj1.left){
                 newActiveObjects.add(obj2);
             }
         }
