@@ -2,17 +2,15 @@ package Algorithms.PlaneSweepHelpers;
 
 import Algorithms.GeometryHelpers.GeometryReader;
 import Italy.ItalyLocation;
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class PlaneSweepItalyLocation {
     private GeometryReader reader = new GeometryReader();
     public ItalyLocation italyLocation;
-    public double left;
-    public double right;
+    public double left = Double.POSITIVE_INFINITY;
+    public double right = Double.NEGATIVE_INFINITY;
     public Geometry geometry;
 
     public boolean intersects(PlaneSweepItalyLocation otherObj){
@@ -21,29 +19,20 @@ public class PlaneSweepItalyLocation {
 
     public PlaneSweepItalyLocation(ItalyLocation location){
         italyLocation = location;
+
         // Geometry
         int geoIndex = italyLocation.getColumns().indexOf("geo_wkt");
         String geoString = italyLocation.getValuesAsList().get(geoIndex);
         geometry = reader.read(geoString);
-        //TODO: This should be written more efficiently
-        // Left: get x-value of leftmost coordinate
-        Arrays.stream(geometry.getCoordinates()).min(new Comparator<Coordinate>() {
-            @Override
-            public int compare(Coordinate o1, Coordinate o2) {
-                if (o1.x < o2.x) return -1;
-                if (o1.x > o2.x) return 1;
-                return 0;
+
+        // Left and Right : find x-value of leftmost and rightmost coordinate
+        Arrays.stream(geometry.getCoordinates()).forEach(coordinate -> {
+            if (coordinate.x < this.left){
+                this.left = coordinate.x;
+            } else if (coordinate.x > this.right){
+                this.right = coordinate.x;
             }
-        }).ifPresent(value -> this.left = value.x );
-        // Right: get x-value of rightmost coordinate
-        Arrays.stream(geometry.getCoordinates()).max(new Comparator<Coordinate>() {
-            @Override
-            public int compare(Coordinate o1, Coordinate o2) {
-                if (o1.x < o2.x) return -1;
-                if (o1.x > o2.x) return 1;
-                return 0;
-            }
-        }).ifPresent(value -> this.right = value.x );
+        });
     }
 
 }
