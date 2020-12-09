@@ -17,11 +17,11 @@ public class PlaneSweepItalyLocation {
         return geometry.intersects(otherObj.geometry);
     }
 
-    public PlaneSweepItalyLocation(ItalyLocation location){
+    public PlaneSweepItalyLocation(ItalyLocation location, String attribute){
         italyLocation = location;
 
         // Geometry
-        int geoIndex = italyLocation.getColumns().indexOf("geo_wkt");
+        int geoIndex = italyLocation.getColumns().indexOf(attribute);
         String geoString = italyLocation.getValuesAsList().get(geoIndex);
         geometry = reader.read(geoString);
 

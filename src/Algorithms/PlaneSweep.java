@@ -31,16 +31,35 @@ import java.util.Comparator;
 //end;
 
 public class PlaneSweep {
+    String attribute;
+    String attribute2;
+    protected ArrayList<PlaneSweepItalyLocation> setA;
+    protected ArrayList<PlaneSweepItalyLocation> setB;
 
-    public ArrayList<PlaneSweepItalyLocation> intializeLocations(ArrayList<ItalyLocation> italyLocations){
+    public PlaneSweep(String _attribute){
+        attribute = _attribute;
+        attribute2 = _attribute;
+    }
+
+    public PlaneSweep(String _attribute, String _attribute2){
+        attribute = _attribute;
+        attribute2 = _attribute2;
+    }
+
+    public void initialize(ArrayList<ItalyLocation> italyLocations1, ArrayList<ItalyLocation> italyLocations2){
+        setA = intializeLocations(italyLocations1, attribute);
+        setB = intializeLocations(italyLocations2, attribute2);
+    }
+
+    private ArrayList<PlaneSweepItalyLocation> intializeLocations(ArrayList<ItalyLocation> italyLocations, String attr){
         ArrayList<PlaneSweepItalyLocation> psLocations = new ArrayList<>();
         for(int i=0;i<italyLocations.size();i++){
-            psLocations.add(new PlaneSweepItalyLocation(italyLocations.get(i)));
+            psLocations.add(new PlaneSweepItalyLocation(italyLocations.get(i), attr));
         }
         return psLocations;
     }
 
-    private ArrayList<PlaneSweepItalyLocation> sortByLeftSide(ArrayList<PlaneSweepItalyLocation> set) {
+    protected ArrayList<PlaneSweepItalyLocation> sortByLeftSide(ArrayList<PlaneSweepItalyLocation> set) {
         Collections.sort(set, new Comparator<PlaneSweepItalyLocation>() {
             @Override
             public int compare(PlaneSweepItalyLocation o1, PlaneSweepItalyLocation o2) {
@@ -54,7 +73,7 @@ public class PlaneSweep {
         return set;
     }
 
-    public void planeSweep(ArrayList<PlaneSweepItalyLocation> setA, ArrayList<PlaneSweepItalyLocation> setB) {
+    public ArrayList<ArrayList<String>> planeSweep() {
         ArrayList<PlaneSweepItalyLocation> listA = sortByLeftSide(setA);
         ArrayList<PlaneSweepItalyLocation> listB = sortByLeftSide(setB);
         SweepStructure sweepStructureA = new SweepStructure();
@@ -105,5 +124,6 @@ public class PlaneSweep {
         }
 
         System.out.println("PlaneSweep detected " + intersectingCount + " intersections");
+        return null;
     }
 }

@@ -24,17 +24,16 @@ public class TestPlaneSweep {
 
 
         // PlaneSweep object
-        PlaneSweep ps = new PlaneSweep();
+        PlaneSweep ps = new PlaneSweep("geo_wkt");
 
         //Initialize data
         long startTime = System.nanoTime();
-        ArrayList<PlaneSweepItalyLocation> ps1 = ps.intializeLocations(communities);
-        ArrayList<PlaneSweepItalyLocation> ps2 = ps.intializeLocations(railways);
+        ps.initialize(communities, railways);
         long initTime = System.nanoTime();
         System.out.println("Finished initializing, took " + ((initTime - startTime) / 1000000) + "ms");
 
         long psStartTime = System.nanoTime();
-        ps.planeSweep(ps1, ps2);
+        ps.planeSweep();
         long endTime = System.nanoTime();
         long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
         System.out.println("PlaneSweep took: " + duration + "ms");

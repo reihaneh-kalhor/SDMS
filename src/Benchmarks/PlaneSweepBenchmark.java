@@ -1,7 +1,6 @@
 package Benchmarks;
 
-import Algorithms.PlaneSweep;
-import Algorithms.PlaneSweepHelpers.PlaneSweepItalyLocation;
+import Algorithms.PlaneSweepMerge;
 import Database.ClientDB;
 import Italy.ItalyLocation;
 
@@ -17,16 +16,20 @@ public class PlaneSweepBenchmark {
         return temp/durations.size();
     }
 
-    private static void printResults(int warmUp, int reps, long avg){
+    private static void printResults(int warmUp, int reps, long avg, long init, int intersections){
         System.out.println("--------------------------");
+        System.out.println("Detected Intersections: " + intersections);
         System.out.println("Total runs: " + reps);
         System.out.println("Warm-up runs: " + warmUp);
+        System.out.println("Initializing took: " + init + "ms");
         System.out.println("Average Duration: " + avg + "ms");
+        System.out.println("Combined Duration: " + (init + avg) + "ms");
         System.out.println("--------------------------");
     }
 
     public static void main(String[] args) {
         ArrayList<Long> durations = new ArrayList<>();
+        int detectedIntersections = 0;
         int warmUp = 5;
         int reps = 15;
         if(args.length>0){
@@ -48,23 +51,25 @@ public class PlaneSweepBenchmark {
         System.out.println(" ~ done");
 
 
-        // PlaneSweep object
-        PlaneSweep ps = new PlaneSweep();
+        // PlaneSweepMerge object
+        PlaneSweepMerge psm = new PlaneSweepMerge("geo_wkt");
 
         //Initialize data
         System.out.println("Initializing...");
         long startTime = System.nanoTime();
-        ArrayList<PlaneSweepItalyLocation> ps1 = ps.intializeLocations(communities);
-        ArrayList<PlaneSweepItalyLocation> ps2 = ps.intializeLocations(railways);
-        long initTime = System.nanoTime();
-        System.out.println("Finished initializing, took " + ((initTime - startTime) / 1000000) + "ms");
+        //Set data to use and measure initializing time
+        psm.initialize(communities, railways);
+        long initEndTime = System.nanoTime();
+        long initTime = ((initEndTime - startTime) / 1000000);
+        System.out.println("Finished initializing, took " + initTime + "ms");
 
         //Run Benchmark
         for (int i=0;i<reps;i++){
             long psStartTime = System.nanoTime();
-            ps.planeSweep(ps1, ps2);
+            ArrayList<ArrayList<String>> result = psm.planeSweep();
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
+            detectedIntersections = result.size();
             System.out.println("PlaneSweep took: " + duration + "ms");
             if (i>= warmUp){
                 durations.add(duration);
@@ -73,6 +78,6 @@ public class PlaneSweepBenchmark {
 
         //Report Result
         long avg = calculateAvgDuration(durations);
-        printResults(warmUp, reps, avg);
+        printResults(warmUp, reps, avg, initTime, detectedIntersections);
     }
 }
