@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public class SweepStructure {
     //List of active Objects
-    ArrayList<PlaneSweepItalyLocation> activeObjects = new ArrayList<>();
+    private ArrayList<PlaneSweepItalyLocation> activeObjects = new ArrayList<>();
+
+    public boolean isEmpty(){
+        return activeObjects.isEmpty();
+    }
 
     //Add an Object to the list of active Objects
     public void insert(PlaneSweepItalyLocation obj1){

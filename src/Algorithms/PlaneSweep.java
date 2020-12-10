@@ -94,28 +94,24 @@ public class PlaneSweep {
                 sweepStructureA.insert(listAFirst);
                 sweepStructureB.removeInactive(listAFirst);
                 ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureB.search(listAFirst);
-                //System.out.println("Intersecting: " + intersecting);
                 intersectingCount += intersecting.size();
-                //TODO: Do something meaningful with the result
                 indexA++;
             } else {
                 sweepStructureB.insert(listBFirst);
                 sweepStructureA.removeInactive(listBFirst);
                 ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureA.search(listBFirst);
-                //System.out.println("Intersecting: " + intersecting);
                 intersectingCount += intersecting.size();
-                //TODO: Do something meaningful with the result
                 indexB++;
             }
         }
-        while (indexA < sizeA) {
+        while (indexA < sizeA && !sweepStructureB.isEmpty()) {
             PlaneSweepItalyLocation listAFirst = listA.get(indexA);
             sweepStructureB.removeInactive(listAFirst);
             ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureB.search(listAFirst);
             intersectingCount = intersectingCount + intersecting.size();
             indexA++;
         }
-        while (indexB < sizeB) {
+        while (indexB < sizeB && !sweepStructureA.isEmpty()) {
             PlaneSweepItalyLocation listBFirst = listB.get(indexB);
             sweepStructureA.removeInactive(listBFirst);
             ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureA.search(listBFirst);

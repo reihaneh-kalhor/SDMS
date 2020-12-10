@@ -64,14 +64,14 @@ public class PlaneSweepMerge extends PlaneSweep {
                 indexB++;
             }
         }
-        while (indexA < sizeA) {
+        while (indexA < sizeA && !sweepStructureB.isEmpty()) {
             PlaneSweepItalyLocation listAFirst = listA.get(indexA);
             sweepStructureB.removeInactive(listAFirst);
             ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureB.search(listAFirst);
             merge(listAFirst, intersecting, result);
             indexA++;
         }
-        while (indexB < sizeB) {
+        while (indexB < sizeB && !sweepStructureA.isEmpty()) {
             PlaneSweepItalyLocation listBFirst = listB.get(indexB);
             sweepStructureA.removeInactive(listBFirst);
             ArrayList<PlaneSweepItalyLocation> intersecting = sweepStructureA.search(listBFirst);
