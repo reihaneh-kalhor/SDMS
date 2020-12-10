@@ -22,11 +22,12 @@ import gnu.trove.TIntProcedure;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+//source: https://github.com/aled/jsi
 
-
-public class IndexedNestedLoopReiVer {
+public class IndexedNestedLoopRTree {
     private Rectangle[] rTreeRecIndex1;
     private Rectangle[] rTreeRecIndex2;
+
 
     public ArrayList<ItalyLocation> join(ArrayList<ItalyLocation> table1, ArrayList<ItalyLocation> table2) {
 
