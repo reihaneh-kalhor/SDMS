@@ -22,8 +22,8 @@ public class TestAlgorithm {
         System.out.println("Reading railways...");
         ArrayList<ItalyLocation> railways = db.readRailways();
 
-        System.out.println("Reading populated_places...");
-        ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();    // TODO create and populate "geo_wkt" column
+//        System.out.println("Reading populated_places...");
+//        ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();    // TODO create and populate "geo_wkt" column
         System.out.println(" ~ done \n");
 
 
@@ -49,14 +49,15 @@ public class TestAlgorithm {
         long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
 
         // Index-nested loop join Rey version
-        // only works with community and railway tables for now (because they have geometry column)
+//        // only works with community and railway tables for now (because they have geometry column)
 //        long startTime = System.nanoTime();
-//        IndexedNestedLoopReiVer idxnl = new IndexedNestedLoopReiVer();
-//        ArrayList<List> res = idxnl.join(populatedPlaces); // res size: 862   time: 130ms
+//        IndexedNestedLoopRTree idxnl = new IndexedNestedLoopRTree();
+//        ArrayList<ItalyLocation> res =
+//                idxnl.join(populatedPlaces,populatedPlaces); // res size: 862   time: 130ms
 //        long endTime = System.nanoTime();
-
+//
 //        long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
-        System.out.println("time: " + duration + "ms");
+//        System.out.println("time: " + duration + "ms");
 
     }
 }
