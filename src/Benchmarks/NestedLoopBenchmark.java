@@ -40,6 +40,7 @@ public class NestedLoopBenchmark {
         //Database
         ClientDB db = new ClientDB();
 
+        System.out.println("--------------------------");
         System.out.println("Reading data from Database...");
         ArrayList<ItalyLocation> communities = db.readCommunities();
         //ArrayList<ItalyLocation> provinces = db.readProvinces();
@@ -47,6 +48,7 @@ public class NestedLoopBenchmark {
         ArrayList<ItalyLocation> railways = db.readRailways();
         //ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();
         System.out.println(" ~ done");
+        System.out.println("--------------------------");
 
 
         // NestedLoop object
@@ -60,6 +62,7 @@ public class NestedLoopBenchmark {
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
             detectedIntersections = result.size();
             System.out.println("NestedLoop took: " + duration + "ms");
+            System.out.println("--------------------------");
             if (i>= warmUp){
                 durations.add(duration);
             }

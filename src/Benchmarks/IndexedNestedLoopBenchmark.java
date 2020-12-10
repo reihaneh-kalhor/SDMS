@@ -40,10 +40,12 @@ public class IndexedNestedLoopBenchmark {
         //Database
         ClientDB db = new ClientDB();
 
+        System.out.println("--------------------------");
         System.out.println("Reading data from Database...");
         ArrayList<ItalyLocation> communities = db.readCommunities();
         ArrayList<ItalyLocation> railways = db.readRailways();
         System.out.println(" ~ done");
+        System.out.println("--------------------------");
 
 
         // IndexedNestedLoop object
@@ -57,6 +59,7 @@ public class IndexedNestedLoopBenchmark {
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
             detectedIntersections = result.size();
             System.out.println("IndexedNestedLoop took: " + duration + "ms");
+            System.out.println("--------------------------");
             if (i>= warmUp){
                 durations.add(duration);
             }
