@@ -49,7 +49,7 @@ public class NestedLoopBenchmark {
         System.out.println(" ~ done");
 
 
-        // PlaneSweepMerge object
+        // NestedLoop object
         NestedLoop nl = new NestedLoop();
 
         //Run Benchmark
