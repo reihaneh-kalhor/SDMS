@@ -29,12 +29,12 @@ public class NestedLoop {
             for (ItalyLocation n1 : table1) {
                 int attIdx1 = n1.getColumns().indexOf(attribute);
                 ArrayList<String> values1 = n1.getValuesAsList();
-                String attVal1 = n1.getValuesAsList().get(attIdx1);
+                String attVal1 = values1.get(attIdx1);
 
                 for (ItalyLocation n2 : table2) {
                     int attIdx2 = n2.getColumns().indexOf(attribute);
                     ArrayList<String> values2 = n2.getValuesAsList();
-                    String attVal2 = n2.getValuesAsList().get(attIdx2);
+                    String attVal2 = values2.get(attIdx2);
 
                     if (attribute.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on geometry, compare shapes
                         values2.remove(attIdx2);

@@ -3,6 +3,8 @@ package Benchmarks;
 import Algorithms.IndexedNestedLoop;
 import Database.ClientDB;
 import Italy.ItalyLocation;
+import org.locationtech.jts.geom.Geometry;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,13 +56,10 @@ public class IndexedNestedLoopBenchmark {
         //Run Benchmark
         for (int i=0;i<reps;i++){
             long psStartTime = System.nanoTime();
-            ArrayList<List> result = idxnl.join(communities, railways);
+            ArrayList<Geometry> result = idxnl.join(communities, railways);
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
-            detectedIntersections = 0;
-            for (List partialRes : result) {
-                detectedIntersections += partialRes.size();
-            }
+            detectedIntersections = result.size();
             System.out.println("IndexedNestedLoop took: " + duration + "ms");
             System.out.println("--------------------------");
             if (i>= warmUp){

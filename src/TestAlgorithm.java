@@ -1,6 +1,7 @@
 import Algorithms.*;
 import Database.ClientDB;
 import Italy.*;
+import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class TestAlgorithm {
 //         only works with community and railway tables for now (because they have geometry column)
         long startTime = System.nanoTime();
         IndexedNestedLoop idxnl = new IndexedNestedLoop();
-        ArrayList<List> res = idxnl.join(communities, railways); // res size: 862   time: 130ms
+        ArrayList<Geometry> res = idxnl.join(communities, railways); // res size: 862   time: 130ms
         long endTime = System.nanoTime();
 
         long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
