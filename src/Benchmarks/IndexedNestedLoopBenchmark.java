@@ -21,7 +21,7 @@ public class IndexedNestedLoopBenchmark {
         System.out.println("Detected Intersections: " + intersections);
         System.out.println("Total runs: " + reps);
         System.out.println("Warm-up runs: " + warmUp);
-        System.out.println("Average NestedLoop Duration: " + avg + "ms");
+        System.out.println("Average IndexNestedLoop Duration: " + avg + "ms");
         System.out.println("--------------------------");
     }
 
@@ -57,7 +57,10 @@ public class IndexedNestedLoopBenchmark {
             ArrayList<List> result = idxnl.join(communities, railways);
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
-            detectedIntersections = result.size();
+            detectedIntersections = 0;
+            for (List partialRes : result) {
+                detectedIntersections += partialRes.size();
+            }
             System.out.println("IndexedNestedLoop took: " + duration + "ms");
             System.out.println("--------------------------");
             if (i>= warmUp){
