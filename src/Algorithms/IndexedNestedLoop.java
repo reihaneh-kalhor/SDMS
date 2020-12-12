@@ -14,7 +14,7 @@ package Algorithms;
 
 
 import Algorithms.GeometryHelpers.GeometryComparison;
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.index.strtree.STRtree;
 
@@ -24,30 +24,33 @@ import java.util.List;
 public class IndexedNestedLoop {
     private GeometryComparison geo = new GeometryComparison();
 
-    public ArrayList<Geometry> join(ArrayList<ItalyLocation> table1, ArrayList<ItalyLocation> table2) {
+    public ArrayList<Geometry> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2) {
         ArrayList<Geometry> interMediateResult = new ArrayList<>();
         ArrayList<Geometry> result = new ArrayList<>();
         STRtree spatialIndex = new STRtree();
 
-        for (ItalyLocation n1 : table1) {
+        for (GeographicalLocation n1 : table1) {
             Geometry geometry1 = n1.getGeometry();
 
             spatialIndex.insert(geometry1.getEnvelopeInternal(), geometry1);
         }
         System.out.println("Spatial index complete");
 
-        for (ItalyLocation n2 : table2) {
+        for (GeographicalLocation n2 : table2) {
             Geometry geometry2 = n2.getGeometry();
 
             List intersectingObjects = spatialIndex.query(geometry2.getEnvelopeInternal());
             interMediateResult.addAll(intersectingObjects);
         }
         System.out.println("Spatial querying complete");
-        System.out.println("MBR intersections: " + interMediateResult.size());
+        int resSize = interMediateResult.size();
+        System.out.println("MBR intersections: " + resSize);
 
+//        int c = 0;
         for (Geometry geom1 : interMediateResult) {
-
-            for (ItalyLocation n2 : table2) {
+//            System.out.println(c + "/" + resSize);
+//            c++;
+            for (GeographicalLocation n2 : table2) {
                 int attIdx2 = n2.getColumns().indexOf("geo_wkt");
                 String geom2 = n2.getValuesAsList().get(attIdx2);
 

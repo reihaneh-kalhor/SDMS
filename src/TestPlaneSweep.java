@@ -1,7 +1,6 @@
 import Algorithms.PlaneSweep;
-import Algorithms.PlaneSweepHelpers.PlaneSweepItalyLocation;
 import Database.ClientDB;
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 
 import java.util.ArrayList;
 
@@ -11,15 +10,15 @@ public class TestPlaneSweep {
         ClientDB db = new ClientDB();
 
         System.out.println("Reading communities...");
-        ArrayList<ItalyLocation> communities = db.readCommunities();
+        ArrayList<GeographicalLocation> communities = db.readCommunities();
         System.out.println("Reading provinces...");
-        ArrayList<ItalyLocation> provinces = db.readProvinces();
+        ArrayList<GeographicalLocation> provinces = db.readProvinces();
         System.out.println("Reading regions...");
-        ArrayList<ItalyLocation> regions = db.readRegions();
+        ArrayList<GeographicalLocation> regions = db.readRegions();
         System.out.println("Reading railways...");
-        ArrayList<ItalyLocation> railways = db.readRailways();
+        ArrayList<GeographicalLocation> railways = db.readRailways();
         System.out.println("Reading populated_places...");
-        ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();
+        ArrayList<GeographicalLocation> populatedPlaces = db.readPopulatedPlaces();
         System.out.println(" ~ done");
 
 

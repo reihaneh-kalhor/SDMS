@@ -1,11 +1,11 @@
-package Italy;
+package GeographicalLocation;
 
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Community extends ItalyLocation {
+public class Community extends GeographicalLocation {
     private String community_id;
     private String community_name;
     private String population;

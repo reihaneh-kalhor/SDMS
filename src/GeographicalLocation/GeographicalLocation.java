@@ -1,11 +1,11 @@
-package Italy;
+package GeographicalLocation;
 
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class ItalyLocation {
+public abstract class GeographicalLocation {
     private ArrayList<String> columns = new ArrayList<>(Arrays.asList(""));
 
     public abstract String getId();

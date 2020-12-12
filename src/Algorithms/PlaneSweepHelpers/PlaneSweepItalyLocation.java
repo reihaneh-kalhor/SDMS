@@ -1,14 +1,14 @@
 package Algorithms.PlaneSweepHelpers;
 
 import Algorithms.GeometryHelpers.GeometryReader;
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.Arrays;
 
 public class PlaneSweepItalyLocation {
     private GeometryReader reader = new GeometryReader();
-    public ItalyLocation italyLocation;
+    public GeographicalLocation geographicalLocation;
     public double left = Double.POSITIVE_INFINITY;
     public double right = Double.NEGATIVE_INFINITY;
     public Geometry geometry;
@@ -17,12 +17,12 @@ public class PlaneSweepItalyLocation {
         return geometry.intersects(otherObj.geometry);
     }
 
-    public PlaneSweepItalyLocation(ItalyLocation location, String attribute){
-        italyLocation = location;
+    public PlaneSweepItalyLocation(GeographicalLocation location, String attribute){
+        geographicalLocation = location;
 
         // Geometry
-        int geoIndex = italyLocation.getColumns().indexOf(attribute);
-        String geoString = italyLocation.getValuesAsList().get(geoIndex);
+        int geoIndex = geographicalLocation.getColumns().indexOf(attribute);
+        String geoString = geographicalLocation.getValuesAsList().get(geoIndex);
         geometry = reader.read(geoString);
 
         // Left and Right : find x-value of leftmost and rightmost coordinate

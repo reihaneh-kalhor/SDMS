@@ -1,11 +1,11 @@
-package Italy;
+package GeographicalLocation;
 
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Region extends ItalyLocation {
+public class Region extends GeographicalLocation {
     private String region_id;
     private String region_name;
     private ArrayList<String> columns = new ArrayList<>(Arrays.asList("region_id", "region_name"));

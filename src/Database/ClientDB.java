@@ -1,9 +1,8 @@
 package Database;
 
-import Italy.*;
+import GeographicalLocation.*;
 //import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.geotools.geometry.jts.WKTReader2;
-import org.geotools.renderer.crs.GeographicHandlerFactory;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.sqlite.SQLiteConfig;
@@ -15,10 +14,11 @@ import java.util.ArrayList;
 
 public class ClientDB {
 
+    private WKTReader2 reader = new WKTReader2();
 
-    public ArrayList<ItalyLocation> readCommunities() {
+    public ArrayList<GeographicalLocation> readCommunities() {
         Connection conn;
-        ArrayList<ItalyLocation> comm_set = new ArrayList<>();
+        ArrayList<GeographicalLocation> comm_set = new ArrayList<>();
 
         try {
             SQLiteConfig config = new SQLiteConfig();
@@ -30,7 +30,6 @@ public class ClientDB {
             java.sql.Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from communities;");
 
-            WKTReader2 reader = new WKTReader2();
             while(rs.next()) {
                 try{
                     String comm_id = rs.getString("community_id");
@@ -54,9 +53,9 @@ public class ClientDB {
         }
         return comm_set;
     }
-    public ArrayList<ItalyLocation> readProvinces() {
+    public ArrayList<GeographicalLocation> readProvinces() {
         Connection conn;
-        ArrayList<ItalyLocation> prov_set = new ArrayList<>();
+        ArrayList<GeographicalLocation> prov_set = new ArrayList<>();
 
         try {
             SQLiteConfig config = new SQLiteConfig();
@@ -83,9 +82,9 @@ public class ClientDB {
         }
         return prov_set;
     }
-    public ArrayList<ItalyLocation> readRegions() {
+    public ArrayList<GeographicalLocation> readRegions() {
         Connection conn;
-        ArrayList<ItalyLocation> reg_set = new ArrayList<>();
+        ArrayList<GeographicalLocation> reg_set = new ArrayList<>();
 
         try {
             SQLiteConfig config = new SQLiteConfig();
@@ -110,9 +109,9 @@ public class ClientDB {
         }
         return reg_set;
     }
-    public ArrayList<ItalyLocation> readRailways() {
+    public ArrayList<GeographicalLocation> readRailways() {
         Connection conn;
-        ArrayList<ItalyLocation> rail_set = new ArrayList<>();
+        ArrayList<GeographicalLocation> rail_set = new ArrayList<>();
 
         try {
             SQLiteConfig config = new SQLiteConfig();
@@ -123,7 +122,6 @@ public class ClientDB {
             // read communities
             java.sql.Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from railways;");
-            WKTReader2 reader = new WKTReader2();
 
             while(rs.next()) {
                 try {
@@ -149,9 +147,9 @@ public class ClientDB {
         }
         return rail_set;
     }
-    public ArrayList<ItalyLocation> readPopulatedPlaces() {
+    public ArrayList<GeographicalLocation> readPopulatedPlaces() {
         Connection conn;
-        ArrayList<ItalyLocation> pop_set = new ArrayList<>();
+        ArrayList<GeographicalLocation> pop_set = new ArrayList<>();
 
         try {
             SQLiteConfig config = new SQLiteConfig();
@@ -177,5 +175,101 @@ public class ClientDB {
             System.exit(1);
         }
         return pop_set;
+    }
+    public ArrayList<GeographicalLocation> readCountries() {
+        Connection conn;
+        ArrayList<GeographicalLocation> country_set = new ArrayList<>();
+
+        try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
+
+            // read communities
+            java.sql.Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from COUNTRIES;");
+            while(rs.next()) {
+                String id = rs.getString("country_id");
+                String name = rs.getString("country_name");
+                String population = rs.getString("population");
+                String income_group = rs.getString("income_group");
+                String geo_wkt = rs.getString("geo_wkt");
+                Geometry geom = reader.read(geo_wkt);
+                Country c = new Country(id, name, population, income_group, geo_wkt, geom);
+                country_set.add(c);
+            }
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return country_set;
+    }
+    public ArrayList<GeographicalLocation> readProvincesGlobal() {
+        Connection conn;
+        ArrayList<GeographicalLocation> prov_global_set = new ArrayList<>();
+
+        try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
+
+            // read communities
+            java.sql.Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from PROVINCES_GLOBAL;");
+            while(rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("province_name");
+                String type = rs.getString("province_type");
+                String latitude = rs.getString("latitude");
+                String longitude = rs.getString("longitude");
+                String country_name = rs.getString("country_name");
+                String geo_wkt = rs.getString("geo_wkt");
+                Geometry geom = reader.read(geo_wkt);
+                ProvinceGlobal p = new ProvinceGlobal(id, name, type, latitude, longitude, country_name, geo_wkt, geom);
+                prov_global_set.add(p);
+            }
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return prov_global_set;
+    }
+    public ArrayList<GeographicalLocation> readPorts() {
+        Connection conn;
+        ArrayList<GeographicalLocation> port_set = new ArrayList<>();
+
+        try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enableLoadExtension(true);
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:italy.sqlite", config.toProperties());
+
+            // read communities
+            java.sql.Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from PORTS;");
+            while(rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String scale_rank = rs.getString("scale_rank");
+                String website = rs.getString("website");
+                String ntlscale = rs.getString("ntlscale");
+                String geo_wkt = rs.getString("geo_wkt");
+                Geometry geom = reader.read(geo_wkt);
+                Port p = new Port(id, name, scale_rank, website, ntlscale, geo_wkt, geom);
+                port_set.add(p);
+            }
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return port_set;
     }
 }

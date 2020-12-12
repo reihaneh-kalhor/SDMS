@@ -2,7 +2,7 @@ package Benchmarks;
 
 import Algorithms.NestedLoop;
 import Database.ClientDB;
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 
 import java.util.ArrayList;
 
@@ -42,10 +42,10 @@ public class NestedLoopBenchmark {
 
         System.out.println("--------------------------");
         System.out.println("Reading data from Database...");
-        ArrayList<ItalyLocation> communities = db.readCommunities();
+        ArrayList<GeographicalLocation> communities = db.readCommunities();
         //ArrayList<ItalyLocation> provinces = db.readProvinces();
         //ArrayList<ItalyLocation> regions = db.readRegions();
-        ArrayList<ItalyLocation> railways = db.readRailways();
+        ArrayList<GeographicalLocation> railways = db.readRailways();
         //ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();
         System.out.println(" ~ done");
         System.out.println("--------------------------");

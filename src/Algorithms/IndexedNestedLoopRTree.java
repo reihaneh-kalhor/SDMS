@@ -12,7 +12,7 @@ package Algorithms;
 //    end for each;
 //end;
 
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 
 import com.infomatiq.jsi.Rectangle;
 import com.infomatiq.jsi.SpatialIndex;
@@ -29,21 +29,21 @@ public class IndexedNestedLoopRTree {
     private Rectangle[] rTreeRecIndex2;
 
 
-    public ArrayList<ItalyLocation> join(ArrayList<ItalyLocation> table1, ArrayList<ItalyLocation> table2) {
+    public ArrayList<GeographicalLocation> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2) {
 
-        ArrayList<ItalyLocation> result = new ArrayList<>();
+        ArrayList<GeographicalLocation> result = new ArrayList<>();
         SpatialIndex si1 = initialSpatialIndex(table1.size(), rTreeRecIndex1);
         SpatialIndex si2 =
                 initialSpatialIndex(table2.size(), rTreeRecIndex2);
 
-        for (ItalyLocation n1 : table1) {
+        for (GeographicalLocation n1 : table1) {
             createRTreeIndex(si1, rTreeRecIndex1,
                     Float.parseFloat(n1.getLatitude()), Float.parseFloat(n1.getLongitude()),Integer.parseInt(n1.getId()));
         }
         System.out.println("Spatial index 1 " +
                 "complete");
 
-        for (ItalyLocation n2 : table2) {
+        for (GeographicalLocation n2 : table2) {
             createRTreeIndex(si2, rTreeRecIndex2,
                     Float.parseFloat(n2.getLatitude()), Float.parseFloat(n2.getLongitude()),Integer.parseInt(n2.getId()));
         }
@@ -63,7 +63,7 @@ public class IndexedNestedLoopRTree {
         }
 
         for (Integer id : ids) {
-            for (ItalyLocation n2 : table2) {
+            for (GeographicalLocation n2 : table2) {
                 if(Integer.parseInt(n2.getId()) == id){
                     result.add(n2);
                 }

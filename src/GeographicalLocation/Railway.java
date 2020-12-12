@@ -1,11 +1,11 @@
-package Italy;
+package GeographicalLocation;
 
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Railway extends ItalyLocation {
+public class Railway extends GeographicalLocation {
     private String pk_uid;
     private String id;
     private String name;

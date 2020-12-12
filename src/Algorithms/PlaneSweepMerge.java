@@ -2,12 +2,8 @@ package Algorithms;
 
 import Algorithms.PlaneSweepHelpers.PlaneSweepItalyLocation;
 import Algorithms.PlaneSweepHelpers.SweepStructure;
-import Italy.ItalyLocation;
-import ucar.ma2.Array;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class PlaneSweepMerge extends PlaneSweep {
 
@@ -20,13 +16,13 @@ public class PlaneSweepMerge extends PlaneSweep {
     }
 
     private void merge(PlaneSweepItalyLocation location1, ArrayList<PlaneSweepItalyLocation> intersectingLocations, ArrayList<ArrayList<String>> result){
-        int attIdx1 = location1.italyLocation.getColumns().indexOf(attribute);
-        ArrayList<String> values1 = location1.italyLocation.getValuesAsList();
+        int attIdx1 = location1.geographicalLocation.getColumns().indexOf(attribute);
+        ArrayList<String> values1 = location1.geographicalLocation.getValuesAsList();
 
         for(int i=0;i<intersectingLocations.size();i++){
             PlaneSweepItalyLocation location2 = intersectingLocations.get(i);
-            int attIdx2 = location2.italyLocation.getColumns().indexOf(attribute2);
-            ArrayList<String> values2 = location2.italyLocation.getValuesAsList();
+            int attIdx2 = location2.geographicalLocation.getColumns().indexOf(attribute2);
+            ArrayList<String> values2 = location2.geographicalLocation.getValuesAsList();
             values2.remove(attIdx2);
             values1.addAll(values2);
             result.add(values1); // merge values

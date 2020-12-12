@@ -2,7 +2,7 @@ package Algorithms;
 
 import Algorithms.PlaneSweepHelpers.PlaneSweepItalyLocation;
 import Algorithms.PlaneSweepHelpers.SweepStructure;
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,15 +46,15 @@ public class PlaneSweep {
         attribute2 = _attribute2;
     }
 
-    public void initialize(ArrayList<ItalyLocation> italyLocations1, ArrayList<ItalyLocation> italyLocations2){
-        setA = intializeLocations(italyLocations1, attribute);
-        setB = intializeLocations(italyLocations2, attribute2);
+    public void initialize(ArrayList<GeographicalLocation> geographicalLocations1, ArrayList<GeographicalLocation> geographicalLocations2){
+        setA = intializeLocations(geographicalLocations1, attribute);
+        setB = intializeLocations(geographicalLocations2, attribute2);
     }
 
-    private ArrayList<PlaneSweepItalyLocation> intializeLocations(ArrayList<ItalyLocation> italyLocations, String attr){
+    private ArrayList<PlaneSweepItalyLocation> intializeLocations(ArrayList<GeographicalLocation> geographicalLocations, String attr){
         ArrayList<PlaneSweepItalyLocation> psLocations = new ArrayList<>();
-        for(int i=0;i<italyLocations.size();i++){
-            psLocations.add(new PlaneSweepItalyLocation(italyLocations.get(i), attr));
+        for(int i = 0; i< geographicalLocations.size(); i++){
+            psLocations.add(new PlaneSweepItalyLocation(geographicalLocations.get(i), attr));
         }
         return psLocations;
     }

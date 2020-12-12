@@ -2,11 +2,10 @@ package Benchmarks;
 
 import Algorithms.IndexedNestedLoop;
 import Database.ClientDB;
-import Italy.ItalyLocation;
+import GeographicalLocation.GeographicalLocation;
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IndexedNestedLoopBenchmark {
 
@@ -44,8 +43,8 @@ public class IndexedNestedLoopBenchmark {
 
         System.out.println("--------------------------");
         System.out.println("Reading data from Database...");
-        ArrayList<ItalyLocation> communities = db.readCommunities();
-        ArrayList<ItalyLocation> railways = db.readRailways();
+        ArrayList<GeographicalLocation> communities = db.readCommunities();
+        ArrayList<GeographicalLocation> railways = db.readRailways();
         System.out.println(" ~ done");
         System.out.println("--------------------------");
 

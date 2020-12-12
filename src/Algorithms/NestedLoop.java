@@ -13,7 +13,7 @@ package Algorithms;
 
 
 import Algorithms.GeometryHelpers.GeometryComparison;
-import Italy.*;
+import GeographicalLocation.*;
 
 import java.util.ArrayList;
 
@@ -22,16 +22,16 @@ public class NestedLoop {
 
     // TODO find way to generalize join condition (now: 'equals' for strings and 'intersects' for geo)
     // generic join, give any two tables and one attribute, return joined result
-    public ArrayList<ArrayList<String>> join(ArrayList<ItalyLocation> table1, ArrayList<ItalyLocation> table2, String attribute) {
+    public ArrayList<ArrayList<String>> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2, String attribute) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         if (hasAttribute(table1, attribute) && hasAttribute(table2, attribute)) {
 
-            for (ItalyLocation n1 : table1) {
+            for (GeographicalLocation n1 : table1) {
                 int attIdx1 = n1.getColumns().indexOf(attribute);
                 ArrayList<String> values1 = n1.getValuesAsList();
                 String attVal1 = values1.get(attIdx1);
 
-                for (ItalyLocation n2 : table2) {
+                for (GeographicalLocation n2 : table2) {
                     int attIdx2 = n2.getColumns().indexOf(attribute);
                     ArrayList<String> values2 = n2.getValuesAsList();
                     String attVal2 = values2.get(attIdx2);
@@ -57,17 +57,17 @@ public class NestedLoop {
 
 
     // generic join, give any two tables and two attributes, return joined result
-    public ArrayList<ArrayList<String>> join(ArrayList<ItalyLocation> table1, ArrayList<ItalyLocation> table2, String attribute1, String attribute2) {
+    public ArrayList<ArrayList<String>> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2, String attribute1, String attribute2) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         if (hasAttribute(table1, attribute1)) {
             if (hasAttribute(table2, attribute2)) {
 
-                for (ItalyLocation n1 : table1) {
+                for (GeographicalLocation n1 : table1) {
                     int attIdx1 = n1.getColumns().indexOf(attribute1);
                     ArrayList<String> values1 = n1.getValuesAsList();
                     String attVal1 = n1.getValuesAsList().get(attIdx1);
 
-                    for (ItalyLocation n2 : table2) {
+                    for (GeographicalLocation n2 : table2) {
                         int attIdx2 = n2.getColumns().indexOf(attribute2);
                         ArrayList<String> values2 = n2.getValuesAsList();
                         String attVal2 = n2.getValuesAsList().get(attIdx2);
@@ -93,7 +93,7 @@ public class NestedLoop {
         return result;
     }
 
-    private boolean hasAttribute(ArrayList<ItalyLocation> table, String attribute) {
+    private boolean hasAttribute(ArrayList<GeographicalLocation> table, String attribute) {
         return (table.size() > 0 && table.get(0).getColumns().contains(attribute));
     }
 }

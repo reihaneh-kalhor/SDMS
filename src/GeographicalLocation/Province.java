@@ -1,11 +1,11 @@
-package Italy;
+package GeographicalLocation;
 
 import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Province extends ItalyLocation {
+public class Province extends GeographicalLocation {
     private String province_id;
     private String province_name;
     private String car_plate_code;
