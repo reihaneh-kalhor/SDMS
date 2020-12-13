@@ -47,8 +47,8 @@ public class IndexedNestedLoop {
         int resSize = interMediateResult.size();
         System.out.println("MBR intersections: " + resSize);
 
+        int b = 0;
         for (Geometry geom1 : interMediateResult) {
-            int b = 0;
 
             for (GeographicalLocation n2 : table2) {
                 Geometry geom2 = n2.getGeometry();

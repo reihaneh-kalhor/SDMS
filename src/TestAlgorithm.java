@@ -61,8 +61,7 @@ public class TestAlgorithm {
 //        // only works with community and railway tables for now (because they have geometry column)
 //        long startTime = System.nanoTime();
 //        IndexedNestedLoopRTree idxnl = new IndexedNestedLoopRTree();
-//        ArrayList<ItalyLocation> res =
-//                idxnl.join(populatedPlaces,populatedPlaces); // res size: 862   time: 130ms
+//        ArrayList<ItalyLocation> res = idxnl.join(populatedPlaces,populatedPlaces); // res size: 862   time: 130ms
 //        long endTime = System.nanoTime();
 //
 //        long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
@@ -79,18 +78,18 @@ public class TestAlgorithm {
         }
         System.out.println("nr of russian provinces: " + russianProvinces.size());
 
-        NestedLoop nl = new NestedLoop();
-        long startTime = System.nanoTime();
-//        HashSet<String> res = nl.joinGeometries(countries, ports); // res size: 642    time: 284735ms
-        HashSet<String> res = nl.joinGeometries(countries, russianProvinces); // res size: 135    time: 30772ms
-        long endTime = System.nanoTime();
-
-
-//        IndexedNestedLoop idxnl = new IndexedNestedLoop();
+//        NestedLoop nl = new NestedLoop();
 //        long startTime = System.nanoTime();
-////        HashSet<String> res = idxnl.join(countries, ports); // res size: 642    time: 37254ms
-//        HashSet<String> res = idxnl.join(countries, russianProvinces); // res size: 86    time: 7205ms
+////        HashSet<String> res = nl.joinGeometries(countries, ports); // res size: 642    time: 284735ms
+//        HashSet<String> res = nl.joinGeometries(countries, russianProvinces); // res size: 135    time: 30772ms
 //        long endTime = System.nanoTime();
+
+
+        IndexedNestedLoop idxnl = new IndexedNestedLoop();
+        long startTime = System.nanoTime();
+//        HashSet<String> res = idxnl.join(countries, ports); // res size: 642    time: 37254ms
+        HashSet<String> res = idxnl.join(countries, russianProvinces); // res size: 135    time: 7038ms
+        long endTime = System.nanoTime();
 
 
         long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.

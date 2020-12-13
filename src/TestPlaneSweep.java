@@ -55,8 +55,8 @@ public class TestPlaneSweep {
         }
         System.out.println("nr of russian provinces: " + russianProvinces.size());
         long startTime = System.nanoTime();
-//        ps.initialize(countries, ports);
-        ps.initialize(countries, russianProvinces);
+//        ps.initialize(countries, ports);                // res size: 642    time: 39453ms
+        ps.initialize(countries, russianProvinces);     // res size: 135    time: 5504ms
         long initTime = System.nanoTime();
         System.out.println("Finished initializing, took " + ((initTime - startTime) / 1000000) + "ms");
 
