@@ -5,6 +5,7 @@ import Database.ClientDB;
 import GeographicalLocation.GeographicalLocation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class NestedLoopBenchmark {
 
@@ -43,10 +44,10 @@ public class NestedLoopBenchmark {
         System.out.println("--------------------------");
         System.out.println("Reading data from Database...");
         ArrayList<GeographicalLocation> communities = db.readCommunities();
-        //ArrayList<ItalyLocation> provinces = db.readProvinces();
-        //ArrayList<ItalyLocation> regions = db.readRegions();
         ArrayList<GeographicalLocation> railways = db.readRailways();
-        //ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();
+        ArrayList<GeographicalLocation> countries = db.readCountries();
+        ArrayList<GeographicalLocation> prov_global = db.readProvincesGlobal();
+        ArrayList<GeographicalLocation> ports = db.readPorts();
         System.out.println(" ~ done");
         System.out.println("--------------------------");
 
@@ -55,9 +56,23 @@ public class NestedLoopBenchmark {
         NestedLoop nl = new NestedLoop();
 
         //Run Benchmark
+        ArrayList<GeographicalLocation> russianProvinces = new ArrayList<>();
+        for (GeographicalLocation prov : prov_global) {
+            if (prov.getValuesAsList().get(3).equals("Russia")) {
+                russianProvinces.add(prov);
+            }
+        }
+        System.out.println("nr of russian provinces: " + russianProvinces.size());
         for (int i=0;i<reps;i++){
             long psStartTime = System.nanoTime();
-            ArrayList<ArrayList<String>> result = nl.join(communities, railways, "geo_wkt");
+
+            // Query 1
+//            HashSet<String> result = nl.joinGeometries(communities, railways);
+            // Query 2
+            HashSet<String> result = nl.joinGeometries(countries, ports);
+            // Query 3
+//            HashSet<String> result = nl.joinGeometries(countries, russianProvinces);
+
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
             detectedIntersections = result.size();

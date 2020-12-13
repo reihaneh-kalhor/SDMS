@@ -45,10 +45,10 @@ public class PlaneSweepBenchmark {
         System.out.println("--------------------------");
         System.out.println("Reading data from Database...");
         ArrayList<GeographicalLocation> communities = db.readCommunities();
-        //ArrayList<ItalyLocation> provinces = db.readProvinces();
-        //ArrayList<ItalyLocation> regions = db.readRegions();
         ArrayList<GeographicalLocation> railways = db.readRailways();
-        //ArrayList<ItalyLocation> populatedPlaces = db.readPopulatedPlaces();
+        ArrayList<GeographicalLocation> countries = db.readCountries();
+        ArrayList<GeographicalLocation> prov_global = db.readProvincesGlobal();
+        ArrayList<GeographicalLocation> ports = db.readPorts();
         System.out.println(" ~ done");
         System.out.println("--------------------------");
 
@@ -57,13 +57,26 @@ public class PlaneSweepBenchmark {
         PlaneSweepMerge psm = new PlaneSweepMerge("geo_wkt");
 
         //Run Benchmark
+        ArrayList<GeographicalLocation> russianProvinces = new ArrayList<>();
+        for (GeographicalLocation prov : prov_global) {
+            if (prov.getValuesAsList().get(3).equals("Russia")) {
+                russianProvinces.add(prov);
+            }
+        }
         for (int i=0;i<reps;i++){
             //Initialize data
             System.out.println("Initializing...");
             System.out.println("--------------------------");
             long initStartTime = System.nanoTime();
+
             //Set data to use and measure initializing time
-            psm.initialize(communities, railways);
+            // Query 1
+//            psm.initialize(communities, railways);
+            // Query 2
+            psm.initialize(countries, ports);
+            // Query 3
+//            psm.initialize(countries, russianProvinces);
+
             long initEndTime = System.nanoTime();
             long initDuration = ((initEndTime - initStartTime) / 1000000);
             System.out.println("Finished initializing, took " + initDuration + "ms");

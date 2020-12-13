@@ -45,6 +45,9 @@ public class IndexedNestedLoopBenchmark {
         System.out.println("Reading data from Database...");
         ArrayList<GeographicalLocation> communities = db.readCommunities();
         ArrayList<GeographicalLocation> railways = db.readRailways();
+        ArrayList<GeographicalLocation> countries = db.readCountries();
+        ArrayList<GeographicalLocation> prov_global = db.readProvincesGlobal();
+        ArrayList<GeographicalLocation> ports = db.readPorts();
         System.out.println(" ~ done");
         System.out.println("--------------------------");
 
@@ -53,9 +56,22 @@ public class IndexedNestedLoopBenchmark {
         IndexedNestedLoop idxnl = new IndexedNestedLoop();
 
         //Run Benchmark
+        ArrayList<GeographicalLocation> russianProvinces = new ArrayList<>();
+        for (GeographicalLocation prov : prov_global) {
+            if (prov.getValuesAsList().get(3).equals("Russia")) {
+                russianProvinces.add(prov);
+            }
+        }
         for (int i=0;i<reps;i++){
             long psStartTime = System.nanoTime();
-            HashSet<String> result = idxnl.join(communities, railways);
+
+            // Query 1
+//            HashSet<String> result = idxnl.join(communities, railways);
+            // Query 2
+            HashSet<String> result = idxnl.join(countries, ports);
+            // Query 3
+//            HashSet<String> result = idxnl.join(countries, russianProvinces);
+
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
             detectedIntersections = result.size();
