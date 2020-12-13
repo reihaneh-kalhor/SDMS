@@ -43,6 +43,11 @@ public class Community extends GeographicalLocation {
         return geometry;
     }
 
+    @Override
+    public String getGeoWKT() {
+        return geo_wkt;
+    }
+
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(community_id, community_name, population, province_id, geo_wkt));

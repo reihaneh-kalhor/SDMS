@@ -1,7 +1,6 @@
 package Database;
 
 import GeographicalLocation.*;
-//import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.geotools.geometry.jts.WKTReader2;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
@@ -224,12 +223,12 @@ public class ClientDB {
                 String id = rs.getString("id");
                 String name = rs.getString("province_name");
                 String type = rs.getString("province_type");
+                String country_name = rs.getString("country_name");
                 String latitude = rs.getString("latitude");
                 String longitude = rs.getString("longitude");
-                String country_name = rs.getString("country_name");
                 String geo_wkt = rs.getString("geo_wkt");
                 Geometry geom = reader.read(geo_wkt);
-                ProvinceGlobal p = new ProvinceGlobal(id, name, type, latitude, longitude, country_name, geo_wkt, geom);
+                ProvinceGlobal p = new ProvinceGlobal(id, name, type, country_name, latitude, longitude, geo_wkt, geom);
                 prov_global_set.add(p);
             }
             rs.close();

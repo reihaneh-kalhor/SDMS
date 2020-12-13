@@ -3,9 +3,9 @@ package Benchmarks;
 import Algorithms.IndexedNestedLoop;
 import Database.ClientDB;
 import GeographicalLocation.GeographicalLocation;
-import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class IndexedNestedLoopBenchmark {
 
@@ -55,7 +55,7 @@ public class IndexedNestedLoopBenchmark {
         //Run Benchmark
         for (int i=0;i<reps;i++){
             long psStartTime = System.nanoTime();
-            ArrayList<Geometry> result = idxnl.join(communities, railways);
+            HashSet<String> result = idxnl.join(communities, railways);
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
             detectedIntersections = result.size();

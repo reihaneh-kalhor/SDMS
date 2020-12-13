@@ -40,6 +40,10 @@ public class PopulatedPlace extends GeographicalLocation {
         System.out.println("PopulatedPlace has no geometry column");
         return null;
     }
+    @Override
+    public String getGeoWKT() {
+        return null;
+    }
 
     public ArrayList<String> getColumns() {
         return columns;

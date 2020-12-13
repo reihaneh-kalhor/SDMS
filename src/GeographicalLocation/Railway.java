@@ -38,6 +38,10 @@ public class Railway extends GeographicalLocation {
         return columns;
     }
     public Geometry getGeometry() { return geometry; }
+    @Override
+    public String getGeoWKT() {
+        return geo_wkt;
+    }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(pk_uid, id, name, geo_wkt));
     }

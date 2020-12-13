@@ -10,6 +10,7 @@ public abstract class GeographicalLocation {
 
     public abstract String getId();
     public abstract Geometry getGeometry();
+    public abstract String getGeoWKT();
     public abstract ArrayList<String> getColumns();
     public abstract ArrayList<String> getValuesAsList();
 

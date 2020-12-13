@@ -47,6 +47,10 @@ public class ProvinceGlobal extends GeographicalLocation{
     public Geometry getGeometry() {
         return geom;
     }
+    @Override
+    public String getGeoWKT() {
+        return geo_wkt;
+    }
 
     @Override
     public String getLatitude() {

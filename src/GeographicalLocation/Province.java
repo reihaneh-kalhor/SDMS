@@ -37,6 +37,10 @@ public class Province extends GeographicalLocation {
         System.out.println("Province has no geometry column");
         return null;
     }
+    @Override
+    public String getGeoWKT() {
+        return null;
+    }
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {
         return new ArrayList<>(Arrays.asList(province_id, province_name, car_plate_code, region_id));

@@ -13,38 +13,52 @@ package Algorithms;
 
 
 import Algorithms.GeometryHelpers.GeometryComparison;
-import GeographicalLocation.*;
+import GeographicalLocation.GeographicalLocation;
+import org.locationtech.jts.geom.Geometry;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class NestedLoop {
     private GeometryComparison geo = new GeometryComparison();
 
-    // TODO find way to generalize join condition (now: 'equals' for strings and 'intersects' for geo)
+    // Geometric join, given any two tables and no attribute, join on geometries
+    public HashSet<String> joinGeometries(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2) {
+        HashSet<String> result = new HashSet<>();
+
+        for (GeographicalLocation n1 : table1) {
+            String geom1 = n1.getGeoWKT();                              // get Geometry of row1
+
+            for (GeographicalLocation n2 : table2) {
+                Geometry geom2 = n2.getGeometry();                          // get Geometry of row2
+
+                if (geo.compareShapesIntersection(geom1, geom2)) {          // check if Geometries intersect
+                    result.add(n2.getValuesAsList().toString().concat(n1.getValuesAsList().toString()));    // merge rows
+                }
+            }
+        }
+        return result;
+    }
+
     // generic join, give any two tables and one attribute, return joined result
     public ArrayList<ArrayList<String>> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2, String attribute) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         if (hasAttribute(table1, attribute) && hasAttribute(table2, attribute)) {
 
             for (GeographicalLocation n1 : table1) {
-                int attIdx1 = n1.getColumns().indexOf(attribute);
-                ArrayList<String> values1 = n1.getValuesAsList();
-                String attVal1 = values1.get(attIdx1);
+                int attIdx1 = n1.getColumns().indexOf(attribute);           // index of attribute1 for table1 (= which column)
+                ArrayList<String> values1 = n1.getValuesAsList();           // get row
+                String attVal1 = values1.get(attIdx1);                      // get value of field
 
                 for (GeographicalLocation n2 : table2) {
-                    int attIdx2 = n2.getColumns().indexOf(attribute);
-                    ArrayList<String> values2 = n2.getValuesAsList();
-                    String attVal2 = values2.get(attIdx2);
+                    int attIdx2 = n2.getColumns().indexOf(attribute);       // index of attribute2 for table2 (= which column)
+                    ArrayList<String> values2 = n2.getValuesAsList();       // get row
+                    String attVal2 = values2.get(attIdx2);                  // get value of field
 
-                    if (attribute.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on geometry, compare shapes
+                    if (attVal1.equals(attVal2)) {                          // compare fields
                         values2.remove(attIdx2);
-                        values1.addAll(values2);
-                        result.add(values1); // merge values
-                    } else if (attVal1.equals(attVal2)) { // else, compare strings
-                        values2.remove(attIdx2);
-                        values1.addAll(values2);
-                        result.add(values1); // merge values
-//                        System.out.println("joined: " + values1.toString());
+                        values1.addAll(values2);                            // merge rows
+                        result.add(values1);
                     }
                 }
             }
@@ -54,33 +68,26 @@ public class NestedLoop {
         return result;
     }
 
-
-
-    // generic join, give any two tables and two attributes, return joined result
+    // generic join, give any two tables and two attributes (attribute1 for table1, attribute2 for table2), return joined result
     public ArrayList<ArrayList<String>> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2, String attribute1, String attribute2) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         if (hasAttribute(table1, attribute1)) {
             if (hasAttribute(table2, attribute2)) {
 
                 for (GeographicalLocation n1 : table1) {
-                    int attIdx1 = n1.getColumns().indexOf(attribute1);
-                    ArrayList<String> values1 = n1.getValuesAsList();
-                    String attVal1 = n1.getValuesAsList().get(attIdx1);
+                    int attIdx1 = n1.getColumns().indexOf(attribute1);      // index of attribute1 for table1 (= which column)
+                    ArrayList<String> values1 = n1.getValuesAsList();       // get row
+                    String attVal1 = n1.getValuesAsList().get(attIdx1);     // get value of field
 
                     for (GeographicalLocation n2 : table2) {
-                        int attIdx2 = n2.getColumns().indexOf(attribute2);
-                        ArrayList<String> values2 = n2.getValuesAsList();
-                        String attVal2 = n2.getValuesAsList().get(attIdx2);
+                        int attIdx2 = n2.getColumns().indexOf(attribute2);  // index of attribute2 for table2 (= which column)
+                        ArrayList<String> values2 = n2.getValuesAsList();   // get row
+                        String attVal2 = n2.getValuesAsList().get(attIdx2); // get value of field
 
-                        if (attribute1.equals("geo_wkt") && attribute2.equals("geo_wkt") && geo.compareShapesIntersection(attVal1, attVal2)) { // if joining on geometry, compare shapes
+                        if (attVal1.equals(attVal2)) {                      // compare fields
                             values2.remove(attIdx2);
-                            values1.addAll(values2);
-                            result.add(values1); // merge values
-                        } else if (attVal1.equals(attVal2)) { // else, compare strings
-                            values2.remove(attIdx2);
-                            values1.addAll(values2);
-                            result.add(values1); // merge values
-//                        System.out.println("joined: " + values1.toString());
+                            values1.addAll(values2);                        // merge rows
+                            result.add(values1);
                         }
                     }
                 }

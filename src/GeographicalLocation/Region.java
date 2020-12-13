@@ -27,6 +27,10 @@ public class Region extends GeographicalLocation {
         System.out.println("Region has no geometry column");
         return null;
     }
+    @Override
+    public String getGeoWKT() {
+        return null;
+    }
 
     public ArrayList<String> getColumns() {return columns; }
     public ArrayList<String> getValuesAsList() {

@@ -13,7 +13,6 @@ package Algorithms;
 //end;
 
 import GeographicalLocation.GeographicalLocation;
-
 import com.infomatiq.jsi.Rectangle;
 import com.infomatiq.jsi.SpatialIndex;
 import com.infomatiq.jsi.rtree.RTree;

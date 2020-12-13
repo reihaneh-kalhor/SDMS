@@ -19,14 +19,15 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.index.strtree.STRtree;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class IndexedNestedLoop {
     private GeometryComparison geo = new GeometryComparison();
 
-    public ArrayList<Geometry> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2) {
-        ArrayList<Geometry> interMediateResult = new ArrayList<>();
-        ArrayList<Geometry> result = new ArrayList<>();
+    public HashSet<String> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2) {
+        HashSet<Geometry> interMediateResult = new HashSet<>();
+        HashSet<String> result = new HashSet<>();
         STRtree spatialIndex = new STRtree();
 
         for (GeographicalLocation n1 : table1) {
@@ -46,16 +47,15 @@ public class IndexedNestedLoop {
         int resSize = interMediateResult.size();
         System.out.println("MBR intersections: " + resSize);
 
-//        int c = 0;
         for (Geometry geom1 : interMediateResult) {
-//            System.out.println(c + "/" + resSize);
-//            c++;
-            for (GeographicalLocation n2 : table2) {
-                int attIdx2 = n2.getColumns().indexOf("geo_wkt");
-                String geom2 = n2.getValuesAsList().get(attIdx2);
+            int b = 0;
 
-                if (geo.compareShapesIntersection(geom1.toString(), geom2)) { // if joining on geometry, compare shapes
-                    result.add(geom1);
+            for (GeographicalLocation n2 : table2) {
+                Geometry geom2 = n2.getGeometry();
+                b++;
+
+                if (geo.compareShapesIntersection(geom1, geom2)) { // check if Geometries intersect
+                    result.add(n2.getValuesAsList().toString().concat(", " + b));
                 }
             }
         }
