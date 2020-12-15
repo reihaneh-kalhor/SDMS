@@ -27,7 +27,7 @@ public class NestedLoop {
         HashSet<String> result = new HashSet<>();
 
         for (GeographicalLocation n1 : table1) {
-            String geom1 = n1.getGeoWKT();                              // get Geometry of row1
+            Geometry geom1 = n1.getGeometry();                              // get Geometry of row1
 
             for (GeographicalLocation n2 : table2) {
                 Geometry geom2 = n2.getGeometry();                          // get Geometry of row2

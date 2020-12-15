@@ -30,6 +30,9 @@ public class GeometryComparison {
     public boolean compareShapesIntersection(Geometry shape1, Geometry shape2) {
         return shape1.intersects(shape2);
     }
+    public boolean compareShapesContains(Geometry shape1, Geometry shape2) {
+        return shape1.contains(shape2);
+    }
     public boolean compareShapesIntersection(Geometry shape1, String shape2) {
 
         WKTReader2 reader = new WKTReader2();

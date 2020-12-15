@@ -73,9 +73,9 @@ public class PlaneSweepBenchmark {
             // Query 1
 //            psm.initialize(communities, railways);
             // Query 2
-            psm.initialize(countries, ports);
+//            psm.initialize(countries, ports);
             // Query 3
-//            psm.initialize(countries, russianProvinces);
+            psm.initialize(countries, russianProvinces);
 
             long initEndTime = System.nanoTime();
             long initDuration = ((initEndTime - initStartTime) / 1000000);
@@ -85,8 +85,9 @@ public class PlaneSweepBenchmark {
             ArrayList<ArrayList<String>> result = psm.planeSweep();
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
+            long fullDuration = initDuration + duration;
             detectedIntersections = result.size();
-            System.out.println("PlaneSweep took: " + duration + "ms");
+            System.out.println("PlaneSweep took: " + duration + "ms" + "  (" + fullDuration + "ms plus init)");
             System.out.println("--------------------------");
             if (i>= warmUp){
                 initDurations.add(initDuration);

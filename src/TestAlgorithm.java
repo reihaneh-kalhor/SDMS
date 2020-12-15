@@ -11,8 +11,8 @@ public class TestAlgorithm {
 
         ClientDB db = new ClientDB();
 
-//        System.out.println("Reading communities...");
-//        ArrayList<GeographicalLocation> communities = db.readCommunities();
+        System.out.println("Reading communities...");
+        ArrayList<GeographicalLocation> communities = db.readCommunities();
 
 //        System.out.println("Reading provinces...");
 //        ArrayList<GeographicalLocation> provinces = db.readProvinces();
@@ -20,21 +20,21 @@ public class TestAlgorithm {
 //        System.out.println("Reading regions...");
 //        ArrayList<GeographicalLocation> regions = db.readRegions();
 
-//        System.out.println("Reading railways...");
-//        ArrayList<GeographicalLocation> railways = db.readRailways();
+        System.out.println("Reading railways...");
+        ArrayList<GeographicalLocation> railways = db.readRailways();
 
 //        System.out.println("Reading populated_places...");
 //        ArrayList<GeographicalLocation> populatedPlaces = db.readPopulatedPlaces();    // TODO create and populate "geo_wkt" column
 
 
-        System.out.println("Reading countries...");
-        ArrayList<GeographicalLocation> countries = db.readCountries();
-
-        System.out.println("Reading provinces...");
-        ArrayList<GeographicalLocation> prov_global = db.readProvincesGlobal();
-
-        System.out.println("Reading ports...");
-        ArrayList<GeographicalLocation> ports = db.readPorts();
+//        System.out.println("Reading countries...");
+//        ArrayList<GeographicalLocation> countries = db.readCountries();
+//
+//        System.out.println("Reading provinces...");
+//        ArrayList<GeographicalLocation> prov_global = db.readProvincesGlobal();
+//
+//        System.out.println("Reading ports...");
+//        ArrayList<GeographicalLocation> ports = db.readPorts();
 
         System.out.println(" ~ done \n");
 
@@ -51,10 +51,10 @@ public class TestAlgorithm {
 
 
 //         Index-nested loop join
-//        IndexedNestedLoop idxnl = new IndexedNestedLoop();
-//        long startTime = System.nanoTime();
-//        HashSet<String> res = idxnl.join(communities, railways); // res size: 81   time: 4647ms
-//        long endTime = System.nanoTime();
+        IndexedNestedLoop idxnl = new IndexedNestedLoop();
+        long startTime = System.nanoTime();
+        HashSet<String> res = idxnl.join(communities, railways); // res size: 81   time: 4647ms
+        long endTime = System.nanoTime();
 
 
         // Index-nested loop join Rey version
@@ -70,13 +70,13 @@ public class TestAlgorithm {
         // Natural earth queries
 
 //
-        ArrayList<GeographicalLocation> russianProvinces = new ArrayList<>();
-        for (GeographicalLocation prov : prov_global) {
-            if (prov.getValuesAsList().get(3).equals("Russia")) {
-                russianProvinces.add(prov);
-            }
-        }
-        System.out.println("nr of russian provinces: " + russianProvinces.size());
+//        ArrayList<GeographicalLocation> russianProvinces = new ArrayList<>();
+//        for (GeographicalLocation prov : prov_global) {
+//            if (prov.getValuesAsList().get(3).equals("Russia")) {
+//                russianProvinces.add(prov);
+//            }
+//        }
+//        System.out.println("nr of russian provinces: " + russianProvinces.size());
 
 //        NestedLoop nl = new NestedLoop();
 //        long startTime = System.nanoTime();
@@ -85,11 +85,11 @@ public class TestAlgorithm {
 //        long endTime = System.nanoTime();
 
 
-        IndexedNestedLoop idxnl = new IndexedNestedLoop();
-        long startTime = System.nanoTime();
-//        HashSet<String> res = idxnl.join(countries, ports); // res size: 642    time: 37254ms
-        HashSet<String> res = idxnl.join(countries, russianProvinces); // res size: 135    time: 7038ms
-        long endTime = System.nanoTime();
+//        IndexedNestedLoop idxnl = new IndexedNestedLoop();
+//        long startTime = System.nanoTime();
+////        HashSet<String> res = idxnl.join(countries, ports); // res size: 642    time: 37254ms
+//        HashSet<String> res = idxnl.join(countries, russianProvinces); // res size: 135    time: 7038ms
+//        long endTime = System.nanoTime();
 
 
         long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
