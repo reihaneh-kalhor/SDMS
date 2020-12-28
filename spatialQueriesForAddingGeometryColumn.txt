@@ -1,0 +1,99 @@
+//query 2
+
+1- 
+CREATE TABLE CountriesWithGeo (
+  country_id INTEGER NOT NULL PRIMARY KEY,
+  geo_wkt TEXT,
+  country_name TEXT NOT NULL,
+  population real,
+  income_group text);
+  
+2- SELECT
+		AddGeometryColumn('CountriesWithGeo', 'geometry', 0, 'MULTIPOLYGON', 'XY');
+
+3- insert into CountriesWithGeo
+(
+	country_id,
+	geo_wkt ,
+	country_name,
+	population,
+	income_group,
+	geometry)
+SELECT "country_id" AS "country_id",
+    "geo_wkt" AS "geo_wkt", "country_name" AS "country_name",
+    "population" AS "population", "income_group" AS "income_group",
+GeomFromText(geo_wkt) as geometry
+FROM "COUNTRIES"
+
+
+4- CREATE TABLE PortsWithGeo (
+  id INTEGER NOT NULL PRIMARY KEY,
+  name TEXT,
+  scale_rank INTEGER,
+  website text,
+  ntlscale real,
+  geo_wkt text
+  );
+  
+ 5- SELECT
+ AddGeometryColumn('PortsWithGeo', 'geometry', 0, 'POINT', 'XY');
+   
+  
+ 6- insert into PortsWithGeo
+(
+	id,
+	name ,
+	scale_rank,
+	website,
+	ntlscale,
+	geo_wkt,
+	geometry)
+SELECT "id" AS "id", "name" AS "name", "scale_rank" AS "scale_rank",
+    "website" AS "website", "ntlscale" AS "ntlscale",
+    "geo_wkt" AS "geo_wkt" , GeomFromText(geo_wkt) as "geometry"
+FROM "PORTS"
+
+7-SELECT *
+FROM 
+  CountriesWithGeo, PortsWithGeo
+WHERE 
+  ST_Contains(CountriesWithGeo.geometry, PortsWithGeo.geometry) = 1
+
+
+//query 3
+8- CREATE TABLE PROVINCES_GLOBAL_WITHGEO(
+	id INTEGER NOT NULL PRIMARY KEY,
+	province_name TEXT,
+	province_type TEXT,
+	latitude real,
+	longitude real,
+	country_name TEXT,
+	geo_wkt text
+  );
+  
+ 9-  SELECT
+ AddGeometryColumn('PROVINCES_GLOBAL_WITHGEO', 'geometry', 0, 'MULTIPOLYGON', 'XY');
+ 
+ 10- insert into PROVINCES_GLOBAL_WITHGEO
+(
+	id,
+	province_name,
+	province_type,
+	latitude,
+	longitude,
+	country_name,
+	geo_wkt,
+	geometry)
+SELECT "id" AS "id", "province_name" AS "province_name",
+    "province_type" AS "province_type", "latitude" AS "latitude",
+    "longitude" AS "longitude", "country_name" AS "country_name",
+    "geo_wkt" AS "geo_wkt", GeomFromText(geo_wkt) as "geometry"
+FROM "PROVINCES_GLOBAL"
+
+11- SELECT *
+FROM 
+  CountriesWithGeo, PROVINCES_GLOBAL_WITHGEO
+WHERE 
+  PROVINCES_GLOBAL_WITHGEO.country_name = 'Russia' AND
+  ST_Intersects(CountriesWithGeo.geometry, PROVINCES_GLOBAL_WITHGEO.geometry) = 1
+  
