@@ -9,14 +9,14 @@ public class TestPlaneSweep {
     public static void main(String[] args) {
         ClientDB db = new ClientDB();
 
-//        System.out.println("Reading communities...");
-//        ArrayList<GeographicalLocation> communities = db.readCommunities();
+        System.out.println("Reading communities...");
+        ArrayList<GeographicalLocation> communities = db.readCommunities();
 //        System.out.println("Reading provinces...");
 //        ArrayList<GeographicalLocation> provinces = db.readProvinces();
 //        System.out.println("Reading regions...");
 //        ArrayList<GeographicalLocation> regions = db.readRegions();
-//        System.out.println("Reading railways...");
-//        ArrayList<GeographicalLocation> railways = db.readRailways();
+        System.out.println("Reading railways...");
+        ArrayList<GeographicalLocation> railways = db.readRailways();
 //        System.out.println("Reading populated_places...");
 //        ArrayList<GeographicalLocation> populatedPlaces = db.readPopulatedPlaces();
 
@@ -55,8 +55,9 @@ public class TestPlaneSweep {
         }
         System.out.println("nr of russian provinces: " + russianProvinces.size());
         long startTime = System.nanoTime();
-//        ps.initialize(countries, ports);                // res size: 642    time: 39453ms
-        ps.initialize(countries, russianProvinces);     // res size: 135    time: 5504ms
+        ps.initialize(countries, ports);                // res size: 642    time: 39453ms
+//        ps.initialize(countries, russianProvinces);     // res size: 135    time: 5504ms
+//        ps.initialize(countries, prov_global);            // res size: 6903   time: 137715 ms
         long initTime = System.nanoTime();
         System.out.println("Finished initializing, took " + ((initTime - startTime) / 1000000) + "ms");
 

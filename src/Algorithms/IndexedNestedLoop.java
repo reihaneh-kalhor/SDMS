@@ -26,6 +26,7 @@ public class IndexedNestedLoop {
     private GeometryComparison geo = new GeometryComparison();
 
     public HashSet<String> join(ArrayList<GeographicalLocation> table1, ArrayList<GeographicalLocation> table2) {
+        long startTime = System.nanoTime();
         HashSet<Geometry> interMediateResult = new HashSet<>();
         HashSet<String> result = new HashSet<>();
         STRtree spatialIndex = new STRtree();
@@ -43,9 +44,11 @@ public class IndexedNestedLoop {
             List intersectingObjects = spatialIndex.query(geometry2.getEnvelopeInternal());
             interMediateResult.addAll(intersectingObjects);
         }
-        System.out.println("Spatial querying complete");
-        int resSize = interMediateResult.size();
-        System.out.println("MBR intersections: " + resSize);
+        long endTime = System.nanoTime();
+
+        long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.
+        System.out.println("Spatial querying complete, took: " + duration + " ms");
+        System.out.println("MBR intersections: " + interMediateResult.size());
 
         int b = 0;
         for (Geometry geom1 : interMediateResult) {

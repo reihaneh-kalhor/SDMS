@@ -67,11 +67,11 @@ public class NestedLoopBenchmark {
             long psStartTime = System.nanoTime();
 
             // Query 1
-//            HashSet<String> result = nl.joinGeometries(communities, railways);
+            HashSet<String> result = nl.joinGeometries(communities, railways);
             // Query 2
 //            HashSet<String> result = nl.joinGeometries(countries, ports);
             // Query 3
-            HashSet<String> result = nl.joinGeometries(countries, russianProvinces);
+//            HashSet<String> result = nl.joinGeometries(countries, russianProvinces);
 
             long endTime = System.nanoTime();
             long duration = (endTime - psStartTime) / 1000000;  //divide by 1000000 to get ms, 1000000000 for sec.

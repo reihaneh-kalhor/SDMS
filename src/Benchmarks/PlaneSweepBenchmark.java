@@ -73,9 +73,9 @@ public class PlaneSweepBenchmark {
             // Query 1
 //            psm.initialize(communities, railways);
             // Query 2
-//            psm.initialize(countries, ports);
+            psm.initialize(countries, ports);
             // Query 3
-            psm.initialize(countries, russianProvinces);
+//            psm.initialize(countries, russianProvinces);
 
             long initEndTime = System.nanoTime();
             long initDuration = ((initEndTime - initStartTime) / 1000000);

@@ -31,7 +31,6 @@ public class NestedLoop {
 
             for (GeographicalLocation n2 : table2) {
                 Geometry geom2 = n2.getGeometry();                          // get Geometry of row2
-
                 if (geo.compareShapesIntersection(geom1, geom2)) {          // check if Geometries intersect
                     result.add(n2.getValuesAsList().toString().concat(n1.getValuesAsList().toString()));    // merge rows
                 }
